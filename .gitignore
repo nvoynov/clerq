@@ -1,0 +1,12 @@
+/lib/sandbox/
+/test/.sandbox/
+/.imdone/
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/test/tmp/
+/tmp/

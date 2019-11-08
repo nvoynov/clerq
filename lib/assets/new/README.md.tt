@@ -1,0 +1,75 @@
+# <%=config[:project].capitalize%>
+
+Welcome to new [Clerq](https://github.com/nvoynov/clerq) project "<%=config[:project]%>"!
+
+## Directories structure
+
+This project has the following structure:
+
+* [bin/](bin/) - output documents folder;
+* [bin/assets/](bin/assets/) - documents assets folder;
+* [src/](src/) - nodes folder;
+* [lib/](lib/) - library folder;
+* [tt/](tt/) - templates folder;
+* [<%=config[:project]%>.thor](<%=config[:project]%>.thor) - file with custom  tasks;
+* [README.md](README.md) - this file.
+
+## Command Line Interface
+
+To see standard commands enter the following command:
+
+   clerq -h
+
+To see custom commands enter the following command:
+
+   thor <%=config[:project]%>:list
+
+## How to start
+
+To start work with the project just clone the repository
+
+    git clone <repository>.git
+
+or add remote if the folder exists
+
+    git remote add origin <repository>.git
+
+## Git workflow
+
+[Git How To](https://githowto.com/)
+
+Incorporates changes from a remote repository:
+
+    git pull
+
+Create a new branch to start any activity with the repository:
+
+    git branch <branch_name>
+
+Make changes and commit your work:
+
+    git add .
+    git commit -m "branch_name - commit description"
+
+When your changes finished, incorporate changes from the remote repository and merge the `master` branch to your `branch_name`:
+
+    git checkout master
+    git pull
+    git checkout <branch_name>
+    git merge master
+
+Resolve all conflicts and commit changes:
+
+    git add .
+    git commit -m "branch_name conflicts resolved"
+
+Merge your changes to the `master` branch:
+
+    git checkout master
+    git merge <branch_name>
+
+Push your changes to the remote repository:
+
+    git push
+
+Create a merge request if you are not allowed to push to the `master` branch.

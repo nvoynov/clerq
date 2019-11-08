@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "clerq"
+
+rpos = ARGV.index(">")
+ARGV.pop(ARGV.length - rpos) unless rpos.nil?
+Clerq::Cli.start(ARGV)

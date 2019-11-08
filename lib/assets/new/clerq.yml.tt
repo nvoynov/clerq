@@ -1,0 +1,4 @@
+---
+document: <%=config[:project]%>
+template: default.md.erb
+title: <%=config[:project]%>

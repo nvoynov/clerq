@@ -1,0 +1,15 @@
+# TODO how about to include commands automatically from 'lib' folder
+
+require 'thor'
+require 'clerq'
+
+class <%=config[:project].capitalize%> < Thor
+  include Thor::Actions
+
+  desc "stat", "Print statistic"
+  def stat
+    nodes = Clerq::Interactors::JoinNodes.()
+    say "#{nodes.to_a.drop(1).size} nodes total"
+  end
+
+end

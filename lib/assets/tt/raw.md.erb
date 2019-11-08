@@ -1,0 +1,23 @@
+<%
+# template for saving created nodes
+require 'delegate'
+class MarkupNode < SimpleDelegator
+  def title
+    '#' * (nesting_level + 1) + ' [' + id + '] ' + super
+  end
+
+  def meta
+    return '' if super.empty?
+    [].tap{|ary|
+      ary << '{{'
+      hsh.each{|k,v| ary << "#{k}: #{v}"}
+      ary << '}}'
+    }.join("\n")
+  end
+end
+-%>
+<% for @node in @object.to_a.drop(1) -%>
+<%   n = MarkupNode.new(@node) -%>
+<%=  [n.title, n.meta, n.body].select{|t| !t.empty?}.join("\n\n") %>
+
+<% end %>

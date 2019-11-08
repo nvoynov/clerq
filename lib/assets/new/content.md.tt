@@ -1,0 +1,41 @@
+# Introduction
+{{skip_meta: true}}
+
+{{@@skip
+
+This file was created automatically from the premise that you could want to have the high-level structure of the project (document) in a single place.
+
+For the usual descriptive parts (nodes) that do not need unique identifiers - use `skip_meta: true` attribute. To output child parts in appropriate order - use the `order_index: nx ny nz` attribute.
+
+Pay attention that this content placed under `skip` macro that means this content won't be included in the output document.}}
+
+## Purpose
+{{skip_meta: true}}
+
+The purpose of this document is to provide a detailed product description of the <%= config[:project] %>. The document describes the product from user and software requirements perspectives.
+
+All parties who are responsible for the definition and implementation of the project should read and understand this document.
+
+## Scope
+{{skip_meta: true}}
+
+## Definitions, acronyms, and abbreviations
+{{skip_meta: true}}
+
+## References
+{{skip_meta: true}}
+
+## Overview
+{{skip_meta: true}}
+
+# Users and Stakeholders
+{{skip_meta: true}}
+
+# User requirements
+{{skip_meta: true}}
+
+# Functional requirements
+{{skip_meta: true}}
+
+# Nonfunctional requirements
+{{skip_meta: true}}
