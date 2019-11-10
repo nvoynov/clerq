@@ -2,7 +2,12 @@
 
 Gem `clerq` represents an unusual but effective way of writing and managing requirements. It resembles some static site builders and was inspired by those. Actually this gem provides the ability to write requirements in separate files and combine those to a unified consistent requirements source for any future purposes.
 
-Sounds too simple? Combine it with a modern text editor that supports markdown, place repository under `Git`, install `Pandoc` to convert it to any supported format. Create your own commands through `Thor` to automate every piece of work that can be automated. Give it a try!
+The initial needs that served as the starting point for creating this gem can be found in the Clerq Promo project in three different places:
+
+* under `User Stories` section of the final documents [Clerq SRS.md](https://github.com/nvoynov/clerq/blob/master/lib/assets/promo/bin/Clerq%20SRS.md) and [Clerq SRS.docx](https://github.com/nvoynov/clerq/blob/master/lib/assets/promo/bin/Clerq%20SRS.docx);
+* or in raw format in [us.writer.md](https://github.com/nvoynov/clerq/blob/master/lib/assets/promo/src/us/us.writer.md).
+
+Sounds too simple? Combine it with a modern text editor that supports markdown, place repository under `Git`, install `Pandoc` to convert it to other formats. Create your own commands through `Thor` to automate every piece of work that can be automated. Give it a try!
 
 ## Installation
 
@@ -22,19 +27,26 @@ Or install it yourself as:
 
 ## Usage
 
+The clerq flow is supposed the following:
+
+* create requirements by handwriting;
+* manipulate requirements by scripts.
+
+### CLI
+
 To see the list of all standard clerq commands type in console `clerq help` and follow the printed instructions.
 
 To see the list of all specific for the project  commands type `thor help <project>`
 
 Actually the best way to start with Clerq is to see it in action through [Promo](#promo). Just start from copying promo content and running some commands.
 
-### Creating new project
+#### Create new project
 
 To create a new project run `new` command:
 
     $ clerq new <project_name>
 
-### Create new item
+#### Create new item
 
 The simplest way of adding new items to the project is to add a new file to the `src` directory. Of course, Clerq also provides the command `node`
 
@@ -48,7 +60,7 @@ __Templates__
 
 You also can prepare your own templates it `tt` folder and provide template through `-t/--template` option. The content of the template file will be placed on the body of the requirement.
 
-### Check repository
+#### Check repository
 
 Because of lots of handwriting there can be some specific errors in repository. The most obvious are:
 
@@ -62,7 +74,7 @@ The system provides command `clerq check` that will check the repository for the
 
     $ clerq check
 
-### Build project
+#### Build project
 
 Clerq provides the ability to combine all requirements from the project repository and create final document. To create such document you can use `clerq build` command:
 
@@ -85,9 +97,46 @@ __Query requirements__
 
 Clerq also provides ability to query requirements that meet query criteria. To query requirements you should use `-q/--query QUERY_STRING` where `QUERY_STRING` is ruby code that will test if each node meets the  `QUERY_STRING`. For example, `node.tile == 'Functional requirements'` or `node.id == 'us'`.
 
-### Print TOC
+#### Print TOC
 
 Sometimes it helpful to check repository structure by `clerq toc` command. The command also supports `-q/--query QUERY_STRING` option.
+
+### Scripting
+
+It assumed that you run your scripts under your clerq project root directory. The first need for scripting is getting the requirements repository and do something with the requirements.
+
+#### Node class
+
+The building block of the requirements repository is the [Node](https://github.com/nvoynov/clerq/blob/master/lib/clerq/entities/node.rb) class that presents the node entity and provides the Enumerable interface:
+
+```ruby
+class Node
+  include Enumerable
+
+  attr_reader :parent # Node
+  attr_writer :id     # String
+  attr_reader :title  # String
+  attr_writer :items  # Array<Node>
+  attr_reader :meta   # Hash
+  attr_reader :body   # String
+end
+```
+
+#### Interactors
+
+To get requirements repository you should use `JoinNodes` or `QueryNodes` interactor that returns the requirements repository of the current project as [Node](#node-class). When you have Node object, you can visit all its childs through Enumerable interface. Your first script can look as followed:
+
+```ruby
+require 'clerq'
+include Clerk::Interactors
+
+node = JoinNodes.()
+node
+  .select{|n| n[:originator] == 'David'}
+  .each{|n| n[:priority] = 'high'}
+```
+
+Instead of adding extra scripts files, you can write tasks to <project>.thor file and have access to these through thor tasks `thor <project>:<your-task> [<params>]`.
 
 ## Known issues
 
