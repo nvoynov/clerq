@@ -138,6 +138,30 @@ node
 
 Instead of adding extra scripts files, you can write tasks to <project>.thor file and have access to these through thor tasks `thor <project>:<your-task> [<params>]`.
 
+#### Root Node
+
+There is one important point with return value from JoinNodes and QueryNodes. These will always return the root Node object. JoinNodes follows the next rules:
+
+1. It returns the root node when the repository contains the root node.
+2. It creates a new root node with the title from `title: <title>` settings options when the repository does not contain a root node.
+
+The following example does not provide root node and it causes adding root node according to rule 2.
+
+```
+# User requirements
+# Functional requirements
+```
+
+But this one provides, and root node will be `Product SRS` according to rule 1.
+
+```
+# Product SRS
+## User requirements
+## Functional requirements
+```
+
+The QueryNodes will return the Node object in the same logic as JoinNodes. When a query returns one node - this node will be root node. When a query returns more than one, it will create a new Node with the title `Query`.
+
 ## Known issues
 
 ### Failed test
