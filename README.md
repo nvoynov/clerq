@@ -162,6 +162,14 @@ But this one provides, and root node will be `Product SRS` according to rule 1.
 
 The QueryNodes will return the Node object in the same logic as JoinNodes. When a query returns one node - this node will be root node. When a query returns more than one, it will create a new Node with the title `Query`.
 
+### Several artifacts
+
+Because Clerq has `-q/--query QUERY_STRING` option you can be interested in developing several different artifacts in one project. User requirements, software requirements, and architecture as an example.
+
+I was considering such a use case but decided that it is more properly to develop a single artifact per project because usually, each artifact has its own develop-review-release cycle.
+
+Also, I was considering to add some kind of a "top" project that is just a wrapper for individual projects inside (each of them is the clerq project, and the top project just provides a specific set of commands.) I was speculating about some kind of shared content and tracing nodes between different artifacts. But for the moment I have no full-fledged vision.
+
 ## Known issues
 
 ### Failed test
