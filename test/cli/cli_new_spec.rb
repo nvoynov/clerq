@@ -32,7 +32,7 @@ describe 'clerq new' do
     Sandbox.() do
       FileUtils.rm_rf(Dir.glob('*'))
       Clerq::Cli.start args
-      _(proc { Clerq::Cli.start args }).must_output(/Creating/m, /already exists!/m)
+      _(proc { Clerq::Cli.start args }).must_output("", /already exists!/m)
     end
   end
 end

@@ -12,9 +12,9 @@ module Clerq
     STORAGE = 'clerq.yml'.freeze
 
     # binary document settings that can be changed through 'clerq.yml'
-    property :document, default: 'Clеrk SRS'
+    property :document, default: 'Clеrq SRS'
     property :template, default: 'default.md.erb'
-    property :title, default: 'Clеrk SRS'
+    property :title, default: 'Clеrq SRS'
 
     # folders structure
     property :bin, default: 'bin'

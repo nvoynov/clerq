@@ -32,6 +32,14 @@ describe 'cli#toc' do
     EOF
   }
 
+  describe 'when exec outside Clerq' do
+    it 'must stop' do
+      _(proc { Clerq::Cli.start ['toc'] }).must_output(
+        "", /Clerq project required!/
+      )
+    end
+  end
+
   it 'must return toc' do
     Sandbox.project do
       File.write(source, content)
@@ -41,7 +49,7 @@ describe 'cli#toc' do
         hsh[cmd3] = "% #{Clerq.settings.title}. Query: #{cmd3.last}\n"
 
         hsh.keys.each do |cmd|
-          _(proc {Clerq::Cli.start cmd}).must_output hsh[cmd]
+          _(proc {Clerq::Cli.start cmd}).must_output hsh[cmd], ""
         end
       end
 

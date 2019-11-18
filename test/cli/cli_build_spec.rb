@@ -12,6 +12,14 @@ describe 'clerq build' do
     File.write(File.join(settings.src, 'content.md'), content)
   end
 
+  describe 'when exec outside Clerq' do
+    it 'must stop' do
+      _(proc { Clerq::Cli.start ['build'] }).must_output(
+        "", /Clerq project required!/
+      )
+    end
+  end
+
   describe 'when exec without options' do
 
     it 'must buid document by default' do

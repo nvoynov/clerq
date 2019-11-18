@@ -1,7 +1,7 @@
 require 'clerq'
 require 'thor'
 
-class <%=config[:project].capitalize%> < Thor
+class <%=config[:klass]%> < Thor
   include Thor::Actions
 
   desc "stat", "Print statistic"

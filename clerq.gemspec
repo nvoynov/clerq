@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Nikolay Voynov"]
   spec.email         = ["nvoynov@gmail.com"]
 
-  spec.summary       = %q{Toolkit for requirements management}
-  spec.description   = %q{The gem provides requirements markup; file based requirements project structure; document templates; customizable CLI for managing requirements projects.}
+  spec.summary       = %q{Text node repository and automation of managing large structured texts.}
+  spec.description   = %q{The gem provides text nodes markup, text repository, advanced customizable CLI for managing repository, the powerful templating system for text transformation that perfect matches for managing large structured texts.}
   spec.homepage      = "https://github.com/nvoynov/clerq"
   spec.license       = "MIT"
 
