@@ -90,14 +90,14 @@ describe JoinNodes do
       uc.items.last.id.must_equal 'u.uc.02'
     end
 
-    it 'must return top node and one inside (join -> srs)' do
+    it 'must orphan! srs and return as root node' do
       gateway.save(Node.new(id: 'srs', title: 'SRS'))
       gateway.save(Node.new(title: 'User requirements', meta: {parent: 'srs'}))
       gateway.save(Node.new(title: 'Func requirements', meta: {parent: 'srs'}))
 
       node = JoinNodes.()
-      node.id.must_equal 'join'
-      node.items.size.must_equal 1
+      node.id.must_equal 'srs'
+      node.items.size.must_equal 2
     end
   end
 

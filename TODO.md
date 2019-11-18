@@ -1,7 +1,6 @@
 % TODO
 
-[ ] Check behavior of JoinNodes for root node when it only one!
-[ ] Handle `PROJECT` parameter of `cler new PROJECT` for `.thor` when it consists of few words.
+[ ] Handle `PROJECT` parameter of `clerq new PROJECT` for `.thor` when it consists of few words.
 [ ] Remove comment at the top of `assets/clerq.thor`
 [ ] Add CHANGELOG.md
 [ ] Release v0.2.0

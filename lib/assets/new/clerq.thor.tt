@@ -1,7 +1,5 @@
-# TODO how about to include commands automatically from 'lib' folder
-
-require 'thor'
 require 'clerq'
+require 'thor'
 
 class <%=config[:project].capitalize%> < Thor
   include Thor::Actions
