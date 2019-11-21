@@ -85,22 +85,21 @@ module Clerq
     method_option :output, aliases: "-o", type: :string, desc: "output file"
     def build
       stop_unless_clerq!
-      settings = Clerq.settings
-      document = options[:output] || settings.document + '.md'
-      template = options[:tt] || settings.template
+      document = options[:output] || Clerq.document + '.md'
+      template = options[:tt] || Clerq.template
       query = options[:query] || ''
-      build = File.join(settings.bin, document)
-      content = CompileNodes.(template: template, query: query)
+      build = File.join(Clerq.bin, document)
+      content = RenderAssembly.(template: template, query: query)
       File.write(build, content)
       say "'#{build}' created!"
-    rescue CompileNodes::Failure => e
+    rescue RenderAssembly::Failure => e
       stop!(e.message)
     end
 
     desc "check", "Check the project for errors"
     def check
       stop_unless_clerq!
-      errors = CheckNodes.()
+      errors = CheckAssembly.()
       if errors.empty?
         say "No errors found"
         return
@@ -112,7 +111,7 @@ module Clerq
           errors[key].each{|k,v| say "\t#{k}\t#{msg[1]} #{v.join(', ')}"}
         end
       end
-    rescue CheckNodes::Failure => e
+    rescue CheckAssembly::Failure => e
       stop!(e.message)
     end
 
@@ -127,8 +126,10 @@ module Clerq
     method_option :template, aliases: "-t", type: :string, desc: "template"
     def node(id, title = '')
       stop_unless_clerq!
-      settings = Clerq.settings
-      file = File.join(settings.src, "#{id}.md")
+      # smells! smells! smells!
+      # TODO interactor must return file name
+      # TODO must not check if file exists - it task of repository
+      file = File.join(Clerq.src, "#{id}.md")
       stop!("File already exists #{fn}") if File.exist?(file)
       template = options[:template] || ''
       CreateNode.(id: id, title: title, template: template)
@@ -141,13 +142,13 @@ module Clerq
     method_option :query, aliases: "-q", type: :string, desc: "Query"
     def toc
       stop_unless_clerq!
-      query = options[:query]
-      node = query ? QueryNodes.(query: query) : JoinNodes.()
+      node = QueryAssembly.(options[:query] || '')
       puts "% #{node.title}"
+      puts "% #{node[:query]}" if node[:query]
       node.to_a.drop(1).each{|n|
         puts  "#{'  ' * (n.nesting_level - 1)}[#{n.id}] #{n.title}"
       }
-    rescue QueryNodes::Failure, JoinNodes::Failure => e
+    rescue QueryAssembly::Failure => e
       stop!(e.message)
     end
 

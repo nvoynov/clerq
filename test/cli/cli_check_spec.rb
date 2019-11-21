@@ -1,20 +1,19 @@
 require_relative '../spec_helper'
 
-describe '#check' do
-  let(:source) { File.join(Clerq.settings.src, 'contents.md') }
+describe 'clerq check' do
 
-  describe 'when exec outside Clerq' do
-    it 'must stop' do
-      _(proc { Clerq::Cli.start ['check'] }).must_output(
-        "", /Clerq project required!/
-      )
+  describe 'when no errors found' do
+    it 'must repsond no errors found' do
+      ClerqSandbox.() do
+        Clerq.reset
+        cmd = ->{ Clerq::Cli.start ['check']}
+        _(proc{ cmd.call }).must_output "No errors found\n"
+      end
     end
   end
 
-  it 'must not raise exception at least' do
-    Sandbox.project do
-      Clerq::Cli.start ['check']
-    end
+  describe 'when errors found' do
+    it 'must print errors'
   end
 
 end

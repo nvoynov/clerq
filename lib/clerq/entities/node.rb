@@ -41,7 +41,7 @@ class Clerq::Entities::Node
     node
   end
 
-  # Find descendant node by id (for sort_order purpose)
+  # Find child node in @items for :order_index
   # @param [String] node id
   # @return [Node] when id found or nil if did not
   def item(id)
@@ -104,26 +104,11 @@ class Clerq::Entities::Node
     find{|n| n.id.eql? id}
   end
 
-  # TODO: extract to NodeFinder class and do think about helpful prefixes
-  #   '.'    for first descendant
-  #   '.*'   for first descendant by #end_with?
-  #   '..'   for first node at the level of node parent
-  #   '..'   for first node at the level of node parent by #end_with?
-  # def find_node(id)
-  # end
-
-  # TODO: Node#belong_to?(node[String|Node])
-  #   that returns true if node belongs to hierarhy of self included
-  # @param [String|Node] node id or node
-  # @return [Boolean] true if node belongs to hierarchy of id or other node
-  # def belong?(node)
-  # end
-
-  # TODO: add tests
   def orphan!
     return unless @parent
     @parent.delete_item(self)
     @parent = nil
+    self
   end
 
   protected

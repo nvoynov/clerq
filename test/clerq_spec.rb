@@ -9,9 +9,4 @@ describe Clerq do
     _(Clerq).must_respond_to :settings
     _(Clerq.settings.bin).must_equal 'bin'
   end
-
-  it 'must respond_to :gateway' do
-    _(Clerq).must_respond_to :gateway
-    _(Clerq).must_respond_to :gateway=
-  end
 end

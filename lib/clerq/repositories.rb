@@ -1,5 +1,4 @@
-require_relative 'repositories/repository'
-require_relative 'repositories/in_memory'
 require_relative 'repositories/node_reader'
+require_relative 'repositories/file_repository'
 require_relative 'repositories/node_repository'
-require_relative 'repositories/template_repository'
+require_relative 'repositories/text_repository'

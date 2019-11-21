@@ -1,22 +1,24 @@
 # encoding: UTF-8
 
 require_relative "interactor"
+require_relative "query_template"
 
 module Clerq
   module Interactors
 
+    # Creates new node in repository according to provided parameters
+    # or raises CreateNode::Failure when
+    #   * template not found
+    #   * or repository contains a node with the same id
     class CreateNode < Interactor
 
       def call
-        unless @template.empty?
-          tt = gateway.templates(@template)
-          raise Failure, "Template not found" unless tt
-# TODO not just `@body = tt.body` but build `@body` in accordance with tt.body
-          @body = tt.body
-        end
-        node = Clerq::Entities::Node.new(
+        @body = QueryTemplate.(@template) if @body.empty? && !@template.empty?
+        @node = Clerq::Entities::Node.new(
           id: @id, title: @title, body: @body, meta: @meta)
-        gateway.save(node)
+        Clerq.node_repository.save(@node)
+      rescue StandardError => e
+        raise Failure, e.message
       end
 
       protected

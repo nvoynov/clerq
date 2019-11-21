@@ -1,27 +1,23 @@
 # encoding: UTF-8
 
 require_relative "interactor"
-require_relative "join_nodes"
 
 module Clerq
   module Interactors
 
-    # TODO: maybe it needs QueryNodes instead of JoinNodes?
-    # TODO: add check for empty node content - @items.empty && @body.empty?
-    class CheckNodes < Interactor
+    class CheckAssembly < Interactor
 
       def call
-        # TODO: query parameter for each interactor
-        @node = JoinNodes.()
+        @node = Clerq.node_repository.assemble
         {}.tap do |errors|
           nonuniq = nonuniq_ids
-          errors.merge!(nonuniq_ids: nonuniq) unless nonuniq.empty?
+          errors.merge!(nonuniq_ids: nonuniq) if !nonuniq.empty?
           parents = unknown_parents
-          errors.merge!(unknown_parents: parents) unless parents.empty?
+          errors.merge!(unknown_parents: parents) if !parents.empty?
           references = unknown_references
-          errors.merge!(unknown_references: references) unless references.empty?
+          errors.merge!(unknown_references: references) if !references.empty?
           order = unknown_order_index
-          errors.merge!(unknown_order_index: order) unless order.empty?
+          errors.merge!(unknown_order_index: order) if !order.empty?
         end
       end
 

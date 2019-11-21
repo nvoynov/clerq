@@ -17,11 +17,9 @@ module Clerq
       # Should be implemented in subclasses
       def call; end
 
-      protected
+      # TODO Suppress ability to create new object
+      # private_class_method :new
 
-        def gateway
-          Clerq.gateway
-        end
     end
 
   end
