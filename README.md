@@ -225,7 +225,7 @@ include Clerk::Interactors
 node = QueryAssembly.("node.title == 'User requirements'")
 miss = node.drop(1).select{|n| n[:originator].empty? }
 unless miss.empty?
-  errmsg = "`Originator` is missed for the next nodes:\n"
+  errmsg = "`Originator` is missed for the following nodes:\n"
   errmsg << miss.map(&:id).join(', ')
   raise Error, errmsg
 end
@@ -259,6 +259,44 @@ The QueryAssembly.call(query) follow similar logic
 * When query result is empty, the Clerq will provide result with QueryNullNode (node.title == `Query`, node[:query] == QUERY_STRING)
 * When query result contains single node, it becomes a root query node.
 * When query result contains more than one, those becomes a child of root query node.
+
+### Automating
+
+The Clerq creates `<project>.thor` where you can place your project-specific tasks. It is a standard [Thor](https://github.com/erikhuda/thor) that brings you all script automation power through CLI and to dive deeper just spend a few minites reading [the poject wiki](https://github.com/erikhuda/thor/wiki).
+
+Let's move the code from [Scripting](#scripting) section to the `<project>.thor` file:
+
+```ruby
+require 'clerq'
+include Clerq::Interactors
+
+class MyDocument < Thor
+  namespace :mydoc
+
+  no_commands {
+    def stop_on_error!(errmsg)
+      raise Thor::Error, errmsg
+    end
+  }
+
+  desc 'check_originator', 'Check :originator'
+  def check_originator
+    node = QueryAssembly.("node.title == 'User requirements'")
+    miss = node.drop(1).select{|n| n[:originator].empty? }
+    unless miss.empty?
+      errmsg = "`Originator` is missed for the following nodes:\n"
+      errmsg << miss.map(&:id).join(', ')
+      stop_on_error!(errmsg)
+    end
+  end
+end
+```
+
+And then you can run the task by
+
+    $ thor mydoc:check_originator
+
+This example is just very basic and your automation scripts could be much more complex.
 
 ### Templating
 
