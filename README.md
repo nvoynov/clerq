@@ -47,7 +47,7 @@ The Clerq reads nodes from a set of separate files and assembles it to a single 
 
 The first convention is the scheme how a markdown content becomes the `Node` entity.
 
-```
+```markdown
 # [p2] Part two
 {{parent: top}}
 
@@ -78,7 +78,7 @@ Each node must have its own unique id so that you can refer to it in other parts
 
 ID can start with one dot, like `[.suffix]`, and clerq will add id of parent node. For the followed example, `[.fm]` will be translated to `[cm.fm]`.
 
-```
+```markdown
 # 3 Function requirements
 ## [cm] Components
 ### [.fm] File manager
@@ -96,7 +96,7 @@ The excerpt, the text in brackets `{{ }}` that follows by the header, contains n
 
 You can place in metadata any simple string that suitable for providing additional information like status, originator, author, priority, etc. E.g.
 
-```
+```markdown
 # [r.1]
 {{parent: r, status: draft}}
 
@@ -241,14 +241,14 @@ When you have a few root nodes in your repository, those become  direct childs o
 
 The following example does not provide root node and it causes adding root node from `clerq.yml`.
 
-```
+```markdown
 # User requirements
 # Functional requirements
 ```
 
 But this one provides, and root node will be `Product SRS` according to rule 1.
 
-```
+```markdown
 # Product SRS
 ## User requirements
 ## Functional requirements

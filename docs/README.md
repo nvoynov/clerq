@@ -47,12 +47,14 @@ The Clerq reads nodes from a set of separate files and assembles it to a single 
 
 The first convention is the scheme how a markdown content becomes the `Node` entity.
 
-```
+{% raw %}
+```markdown
 # [p2] Part two
 {{parent: top}}
 
 Body
 ```
+{% endraw %}
 
 Where
 
@@ -78,7 +80,7 @@ Each node must have its own unique id so that you can refer to it in other parts
 
 ID can start with one dot, like `[.suffix]`, and clerq will add id of parent node. For the followed example, `[.fm]` will be translated to `[cm.fm]`.
 
-```
+```markdown
 # 3 Function requirements
 ## [cm] Components
 ### [.fm] File manager
@@ -96,7 +98,8 @@ The excerpt, the text in brackets `{{ }}` that follows by the header, contains n
 
 You can place in metadata any simple string that suitable for providing additional information like status, originator, author, priority, etc. E.g.
 
-```
+{% raw %}
+```markdown
 # [r.1]
 {{parent: r, status: draft}}
 
@@ -108,6 +111,7 @@ You can place in metadata any simple string that suitable for providing addition
 {{
 parent: r}}
 ```
+{% endraw %}
 
 #### Assets
 
@@ -241,14 +245,14 @@ When you have a few root nodes in your repository, those become  direct childs o
 
 The following example does not provide root node and it causes adding root node from `clerq.yml`.
 
-```
+```markdown
 # User requirements
 # Functional requirements
 ```
 
 But this one provides, and root node will be `Product SRS` according to rule 1.
 
-```
+```markdown
 # Product SRS
 ## User requirements
 ## Functional requirements
@@ -266,9 +270,9 @@ The Clerq provides the ability to precise adjusting the output for `clerq build`
 
 * [default.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/default.md.erb) that just combines all nodes to one markdown document;
 * [pandoc.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/pandoc.md.erb) is more advanced, it produces [Pandoc's Markdown](https://pandoc.org/MANUAL.html#pandocs-markdown) and provides three followed macros for node body:
-   * `{{@@list}}` - replaces the macro with the list of child requirements;
-   * `{{@@tree}}` - replaces the macro with the tree of child requirements;
-   * `{{@@skip}}` - skip all content inside the brackets.
+   * {% raw %}`{{@@list}}`{% endraw %} - replaces the macro with the list of child requirements;
+   * {% raw %}`{{@@tree}}`{% endraw %} - replaces the macro with the tree of child requirements;
+   * {% raw %}`{{@@skip}}`{% endraw %} - skip all content inside the brackets.
 
 ## Known issues
 

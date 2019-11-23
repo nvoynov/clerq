@@ -7,4 +7,6 @@
 /doc/
 /pkg/
 /spec/reports/
-Gemfile.lock
+/docs/.*
+/docs/_*
+/docs/Gemfile*
