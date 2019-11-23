@@ -308,8 +308,8 @@ The Clerq provides the ability to precise adjusting the output for `clerq build`
 
 * [default.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/default.md.erb) that just combines all nodes to one markdown document;
 * [pandoc.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/pandoc.md.erb) is more advanced, it produces [Pandoc's Markdown](https://pandoc.org/MANUAL.html#pandocs-markdown) and provides three followed macros for node body:
-   * {% raw %}`{{@@list}}`{% endraw %} - replaces the macro with the list of child requirements;
-   * {% raw %}`{{@@tree}}`{% endraw %} - replaces the macro with the tree of child requirements;
+   * {% raw %}`{{@@list}}`{% endraw %} - replaces the macro with the list of child nodes;
+   * {% raw %}`{{@@tree}}`{% endraw %} - replaces the macro with the tree of child nodes;
    * {% raw %}`{{@@skip}}`{% endraw %} - skip all content inside the brackets.
 
 ## Known issues
