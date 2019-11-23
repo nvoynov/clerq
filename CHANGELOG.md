@@ -1,6 +1,6 @@
 # Change log
 
-## master (unreleased)
+## 0.2.0 (2019-11-23)
 
 Changes:
 
@@ -9,11 +9,13 @@ Changes:
 * Totally redesigned NodeRepository and TextRepository.
 * Improved interactors caused by gateways throwing out.
 * Improved tests suite; no more DEPRECATED Minitest; Dir.mktmpdir is used for sandbox.
-* Improved README to include all changes mentioned before.
+* Improved README to include all the changes mentioned before.
 * Improved `clerq new PROJECT` command; when the `PROJECT` parameter consists of more than one word, it will create `<project>.thor` file that follows to usual ruby file and class naming conventions; e.g. for `user guide` it will create `user_guide.thor` and `class UserGuide < Thor` inside.
- * Thor `error(msg)` in `cli.rb` changed to `stop!(mgs); raise Thor::Error`.
- * Improved CLI for `build`, `check`, `toc`, `node`; now each one checks if the command is running in clerq project, checked if `clerq.yml` or `src` folder exist.
- * Other small improvements.
+* Shortened `content.md.tt` content
+* Only two templates in the box are left - `default.md.erb` and `pandoc.md.erb`.
+* Thor `error(msg)` in `cli.rb` changed to `stop!(mgs); raise Thor::Error`.
+* Improved CLI for `build`, `check`, `toc`, `node`; now each one checks if the command is running in clerq project, checked if `clerq.yml` or `src` folder exist.
+* Other small improvements.
 
 ## 0.1.0 (2019-11-08)
 
