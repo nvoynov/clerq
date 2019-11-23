@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clerq (0.1.0)
+    clerq (0.2.0)
       thor (~> 0.20.3)
 
 GEM
