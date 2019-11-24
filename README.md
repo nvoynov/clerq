@@ -262,7 +262,7 @@ The QueryAssembly.call(query) follow similar logic
 
 ### Automating
 
-The Clerq creates `<project>.thor` where you can place your project-specific tasks. It is a standard [Thor](https://github.com/erikhuda/thor) that brings you all script automation power through CLI and to dive deeper just spend a few minites reading [the poject wiki](https://github.com/erikhuda/thor/wiki).
+The Clerq creates `<project>.thor` where you can place your project-specific tasks. It is a standard [Thor](https://github.com/erikhuda/thor) that brings you all script automation power through CLI and to dive deeper just spend a few minutes reading [the poject wiki](https://github.com/erikhuda/thor/wiki).
 
 Let's move the code from [Scripting](#scripting) section to the `<project>.thor` file:
 

@@ -66,11 +66,13 @@ Where
 
 Every new header (`#`) at any level indicates a new node. When a file contains headers of different levels, the nodes will be created in a natural hierarchy based on header levels. So as the result of reading the content below, the Clerq will create the natural hierarchy with root node `Top` that holds two child nodes `First` and `Second`.
 
+{% raw %}
 ```markdown
 # Top
 ## First
 ## Second
 ```
+{% endraw %}
 
 One more extra thing is links. You can place links to other nodes in the body section of the file content by using `[[<id>]]` macro. It can be handled in templates.
 
@@ -80,12 +82,14 @@ Each node must have its own unique id so that you can refer to it in other parts
 
 ID can start with one dot, like `[.suffix]`, and clerq will add id of parent node. For the followed example, `[.fm]` will be translated to `[cm.fm]`.
 
+{% raw %}
 ```markdown
 # 3 Function requirements
 ## [cm] Components
 ### [.fm] File manager
 ### Logger
 ```
+{% endraw %}
 
 When an id is not provided, Clerq will generate it automatically, and you can freely combine nodes that have id and that has not. For the example above, the `Logger`  will be identified as `[cm.01] Logger`.
 
@@ -117,6 +121,7 @@ parent: r}}
 
 When you want to provide some assets or links to something outside the repository you can provide the lint to the assets. Put the asset in the `bin/assets` folder and specify the link.
 
+{% raw %}
 ```markdown
 # [ent] Entities
 
@@ -124,6 +129,7 @@ The following picture shows something
 
 ![Image](assets/er.png)
 ```
+{% endraw %}
 
 ### CLI
 
@@ -223,10 +229,11 @@ Let's invent some advanced scenario. Assume that you develop a "User requirement
 require 'clerq'
 include Clerk::Interactors
 
+# supposed you have something like user requirements document
 node = QueryAssembly.("node.title == 'User requirements'")
 miss = node.drop(1).select{|n| n[:originator].empty? }
 unless miss.empty?
-  errmsg = "`Originator` is missed for the next nodes:\n"
+  errmsg = "`Originator` is missed for the following nodes:\n"
   errmsg << miss.map(&:id).join(', ')
   raise Error, errmsg
 end
@@ -244,18 +251,22 @@ When you have a few root nodes in your repository, those become  direct childs o
 
 The following example does not provide root node and it causes adding root node from `clerq.yml`.
 
+{% raw %}
 ```markdown
 # User requirements
 # Functional requirements
 ```
+{% endraw %}
 
 But this one provides, and root node will be `Product SRS` according to rule 1.
 
+{% raw %}
 ```markdown
 # Product SRS
 ## User requirements
 ## Functional requirements
 ```
+{% endraw %}
 
 The QueryAssembly.call(query) follow similar logic
 
