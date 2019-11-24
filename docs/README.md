@@ -61,7 +61,7 @@ Where
 * `#` familiar markdown header that indicates a new `node`;
 * `[p1]` is an optional identifier that becomes `node.id`;
 * `Part two` is an optional `node.title`;
-* `{{parent: top}}` in an optional metadata section that becomes `node.meta`;
+* {% raw %}`{{parent: top}}`{% endraw %} in an optional metadata section that becomes `node.meta`;
 * and finally `Body` is an optional `node.body`.
 
 Every new header (`#`) at any level indicates a new node. When a file contains headers of different levels, the nodes will be created in a natural hierarchy based on header levels. So as the result of reading the content below, the Clerq will create the natural hierarchy with root node `Top` that holds two child nodes `First` and `Second`.
@@ -91,7 +91,7 @@ When an id is not provided, Clerq will generate it automatically, and you can fr
 
 #### Meta
 
-The excerpt, the text in brackets `{{ }}` that follows by the header, contains node attributes. And the second convention mentioned in [Writing](#writing) section is two magic metadata attributes that specify parameters of a hierarchy:
+The excerpt, the text in brackets {% raw %}`{{ }}`{% endraw %} that follows by the header, contains node attributes. And the second convention mentioned in [Writing](#writing) section is two magic metadata attributes that specify parameters of a hierarchy:
 
 1. `parent: <id>` indicates that the node belongs to a node with specified `id`;
 2. `order_index: <id1> <id2>` indicates that child nodes must be lined up in specified order.
@@ -201,8 +201,6 @@ A usual scenario will consist of two simple steps:
 1. Get data hierarchy from the repository.
 2. Do some processing of the hierarchy.
 
-Instead of adding extra scripts files somewhere in the project, you can write tasks to `<project>.thor` file and access to them through `thor <project>:<your-task> [<params>]`.
-
 #### Node class
 
 The [Writing](#writing) section provides the basic knowledge to understand Clerq, and now it is the right time to see the [Node class](https://github.com/nvoynov/clerq/blob/master/lib/clerq/entities/node.rb). It implements the Composite pattern.
@@ -225,7 +223,6 @@ Let's invent some advanced scenario. Assume that you develop a "User requirement
 require 'clerq'
 include Clerk::Interactors
 
-# supposed you have something like user requirements document
 node = QueryAssembly.("node.title == 'User requirements'")
 miss = node.drop(1).select{|n| n[:originator].empty? }
 unless miss.empty?
@@ -234,6 +231,8 @@ unless miss.empty?
   raise Error, errmsg
 end
 ```
+
+Instead of adding extra scripts files somewhere in the project, you can write tasks in `<project>.thor` (see [Automating](#automating) section for details.)
 
 #### Root Node
 
@@ -330,7 +329,7 @@ Use pandoc for generating output in different formats
 
 ### MarkupNode
 
-Don't like the current dirty solution with templates and incorporated MarkupNode that does all that stuff with macro. It is the first attempt to provide template that can skipp comments
+Don't like the current dirty solution with templates and incorporated MarkupNode that does all that stuff with macro. It is the first attempt to provide template that can skip comments.
 
 ### Several artifacts
 

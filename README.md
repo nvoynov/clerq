@@ -197,8 +197,6 @@ A usual scenario will consist of two simple steps:
 1. Get data hierarchy from the repository.
 2. Do some processing of the hierarchy.
 
-Instead of adding extra scripts files somewhere in the project, you can write tasks to `<project>.thor` file and access to them through `thor <project>:<your-task> [<params>]`.
-
 #### Node class
 
 The [Writing](#writing) section provides the basic knowledge to understand Clerq, and now it is the right time to see the [Node class](https://github.com/nvoynov/clerq/blob/master/lib/clerq/entities/node.rb). It implements the Composite pattern.
@@ -230,6 +228,8 @@ unless miss.empty?
   raise Error, errmsg
 end
 ```
+
+Instead of adding extra scripts files somewhere in the project, you can write tasks in `<project>.thor` (see [Automating](#automating) section for details.)
 
 #### Root Node
 
@@ -326,7 +326,7 @@ Use pandoc for generating output in different formats
 
 ### MarkupNode
 
-Don't like the current dirty solution with templates and incorporated MarkupNode that does all that stuff with macro. It is the first attempt to provide template that can skipp comments
+Don't like the current dirty solution with templates and incorporated MarkupNode that does all that stuff with macro. It is the first attempt to provide template that can skip comments.
 
 ### Several artifacts
 
