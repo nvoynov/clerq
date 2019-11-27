@@ -37,11 +37,11 @@ class MarkupNode < SimpleDelegator
   end
 
   def url(id)
-    id = 'p' + id if id[0] == '0'
-    id.downcase
-      .gsub(/[^A-Za-z0-9]{1,}/, '-')
-      .gsub(/^-/, '')
-      .gsub(/-$/, '')
+    r = id.start_with?(/[[:digit:]]/) ? "p#{id}" : id
+    r.downcase
+     .gsub(/[^A-Za-z0-9]{1,}/, '-')
+     .gsub(/^-/, '')
+     .gsub(/-$/, '')
   end
 
   class Macro

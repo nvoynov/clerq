@@ -1,3 +1,4 @@
 # <%=config[:project]%>
+{{id: 0}}
 
 This file was created automatically by the `clerq new` command as the root node of your project. To familiarize yourself with how to start writing with the Clerq - please read the [Writing](https://github.com/nvoynov/clerq/blob/master/README.md#writing) section and then just delete the content of the paragraph.
