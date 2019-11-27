@@ -2,7 +2,6 @@
 
 [ ] Put `id` in templates when note does not have title
 [ ] Usign `,` or `;` as separator for attributes in metadata
-[ ] Providing `node.id` through `{{id: <id>}}`, in addition to `[]` that preceding the title
 [ ] Return node file name from NodeRepository and CreateNode
 [ ] Provide CheckAssembly with checking links with partial ids e.g. `[[*.entity]]`   
 [ ] Provide separate MarkupNode in `lib` with minitest specs

@@ -44,6 +44,8 @@ module Clerq
         raise ArgumentError, "Invalid argument :title" unless title.is_a? String
         raise ArgumentError, "Invalid argument :body" unless body.is_a? String
         raise ArgumentError, "Invalid argument :meta" unless meta.is_a? Hash
+        id = meta.delete(:id) if id.empty? && meta[:id]
+        meta.delete(:id) unless id.empty?
         @parent = nil
         @items = []
         @id = id

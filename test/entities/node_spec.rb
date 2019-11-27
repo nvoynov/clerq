@@ -35,6 +35,24 @@ describe Node do
     end
   end
 
+  describe 'when metadata has :id' do
+    describe 'and id provided' do
+      it 'must ignore it and delete from meta' do
+        n = Node.new(id: 'id', meta: {id: 'meta'})
+        _(n.id).must_equal 'id'
+        _(n[:id]).must_be_nil
+      end
+    end
+
+    describe 'and id not provided' do
+      it 'must get id from meta and delete it from meta' do
+        n = Node.new(meta: {id: 'id'})
+        _(n.id).must_equal 'id'
+        _(n[:id]).must_be_nil
+      end
+    end
+  end
+
   describe '#parent=(value)' do
     class TestNode < Node; def parent=(value); super(value); end; end
     it 'must raise ArgumentError when value is not Node' do

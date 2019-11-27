@@ -1,8 +1,11 @@
 # Change log
 
-## 0.2.0 (2019-11-23)
+## Master (not released)
 
-Changes:
+* Enhanced the `Node` class; now it will try to find id attribute in metadata when it not provided by writing.
+* Enhanced `NodeReader` class; now it supports three metadata attributes delimiters - `\n`, `;`, and `,` that can be mixed.
+
+## 0.2.0 (2019-11-23)
 
 * Started new project [Clerq Video Guide](https://github.com/nvoynov/clerq-video-guide) that provides example of using Clerq.
 * Done massive refactoring of source code; no more gateways.

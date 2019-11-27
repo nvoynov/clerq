@@ -62,6 +62,15 @@ Where
 * `{{parent: top}}` in an optional metadata section that becomes `node.meta`;
 * and finally `Body` is an optional `node.body`.
 
+From version 0.2.1 you can place `id` inside metadata, so you can provide ids trough metadata section. And you can use there `,`, `;`, and `\n` as attributes delimiter.
+
+```markdown
+# Part two
+{{id: p1, parent: top}}
+
+Body
+```
+
 Every new header (`#`) at any level indicates a new node. When a file contains headers of different levels, the nodes will be created in a natural hierarchy based on header levels. So as the result of reading the content below, the Clerq will create the natural hierarchy with root node `Top` that holds two child nodes `First` and `Second`.
 
 ```markdown
@@ -246,7 +255,7 @@ The following example does not provide root node and it causes adding root node 
 # Functional requirements
 ```
 
-But this one provides, and root node will be `Product SRS` according to rule 1.
+But this one provides, and the root node will be `Product SRS`.
 
 ```markdown
 # Product SRS
@@ -298,6 +307,8 @@ And then you can run the task by
 
 This example is just very basic and your automation scripts could be much more complex.
 
+Another quick example is [clerq.thor] (https://github.com/nvoynov/clerq/blob/master/clerq.thor) file that was created just to overcome handling curly bracket `{{}}` in Jekyll and now I run `thor clerqsrc:docs` every time after changing this file.
+
 ### Templating
 
 The Clerq provides the ability to precise adjusting the output for `clerq build` command by erb-templates and gives you two basic templates from the box.
@@ -313,6 +324,10 @@ The Clerq provides the ability to precise adjusting the output for `clerq build`
 ### Thor version
 
 The one issue I certain in is when you are using different version of thor, your custom scripts won't work.
+
+### Test suite
+
+Because `default.md.erb` and `pandoc.md.erb` have  inside the same class `MarkupNode`, sometimes one of `default_spec.rb` or `pandoc_spec.rb` fails.
 
 ## Some considerations
 

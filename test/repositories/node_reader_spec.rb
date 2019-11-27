@@ -78,6 +78,13 @@ describe NodeReader do
       _(node.meta).must_equal({source: 'user'})
     end
 
+    it 'must parse :meta delimiters' do
+      txt = "#\n{{p1: 1; p2: 2, p3: 3\np4: 4\n}}"
+      hsh = {p1: '1', p2: '2', p3: '3', p4: '4'}
+      _, node = reader.parse_node(txt)
+      _(node.meta).must_equal hsh
+    end
+
     it 'must parse full form' do
       text = <<~EOF
         # [id] Title
