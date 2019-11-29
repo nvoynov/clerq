@@ -60,7 +60,7 @@ module Clerq
             memo
           end
 
-        print "Checking for lost childs in order_index... "
+        print "Checking for lost items in order_index... "
         puts errors.empty? ? 'OK' : "#{errors.size} found"
         errors.each do |n, lost|
           puts "- {{order_index: #{lost.join(' ')}}} not found of node '#{n.id}' in '#{n[:filename]}'"

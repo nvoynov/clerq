@@ -96,7 +96,7 @@ describe CheckAssembly do
    describe '#print_lost_index' do
      let(:func) { ->{spec.print_lost_index} }
 
-     let(:fout0) { "Checking for lost childs in order_index... OK\n" }
+     let(:fout0) { "Checking for lost items in order_index... OK\n" }
 
      let(:node1) {
        Node.new(id: '0', meta: {order_index: '1 2 3 4', filename: '00'}).tap{|n|
@@ -107,7 +107,7 @@ describe CheckAssembly do
 
      let(:fout1) {
        <<~EOF
-         Checking for lost childs in order_index... 1 found
+         Checking for lost items in order_index... 1 found
          - {{order_index: 3 4}} not found of node '0' in '00'
        EOF
      }
