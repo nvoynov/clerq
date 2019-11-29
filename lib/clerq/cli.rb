@@ -108,14 +108,8 @@ module Clerq
     method_option :template, aliases: "-t", type: :string, desc: "template"
     def node(id, title = '')
       stop_unless_clerq!
-      # smells! smells! smells!
-      # TODO interactor must return file name
-      # TODO must not check if file exists - it task of repository
-      file = File.join(Clerq.src, "#{id}.md")
-      stop!("File already exists #{fn}") if File.exist?(file)
-      template = options[:template] || ''
-      CreateNode.(id: id, title: title, template: template)
-      say "'#{file}' created"
+      fn = CreateNode.(id: id, title: title, template: options[:template] || '')
+      say "'#{fn}' created"
     rescue CreateNode::Failure => e
       stop!(e.message)
     end

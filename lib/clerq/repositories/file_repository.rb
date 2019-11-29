@@ -50,6 +50,7 @@ module Clerq
           raise StandardError, errmsg
         end
         File.write(join, content)
+        join
       end
 
     end
