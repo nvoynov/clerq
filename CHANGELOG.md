@@ -1,9 +1,11 @@
 # Change log
 
-## Master (not released)
+## 0.2.1 (2019-11-29)
 
-* Enhanced the `Node` class; now it will try to find id attribute in metadata when it not provided by writing.
+* Enhanced the `Node` class that brings the possibility to provide node id through `{{id: <id>}}` metadata attribute. But it will just skipped when id is already provided by `# [<id>]`.
 * Enhanced `NodeReader` class; now it supports three metadata attributes delimiters - `\n`, `;`, and `,` that can be mixed.
+* `CheckAssembly` interactor replaced by `CheckAssembly` service that provides improved error information with nodes ids and source files names.
+* `file_name` attribute changed to `filename` in `NodeReader`.
 
 ## 0.2.0 (2019-11-23)
 

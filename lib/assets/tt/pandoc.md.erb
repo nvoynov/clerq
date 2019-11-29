@@ -12,7 +12,7 @@ class MarkupNode < SimpleDelegator
 
     hsh = {id: id}.merge(super)
     hsh.delete(:order_index)
-    hsh.delete(:file_name)
+    hsh.delete(:filename)
     hsh.delete(:parent)
     [].tap{|ary|
       ary << "Attribute | Value"

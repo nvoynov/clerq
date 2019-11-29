@@ -10,27 +10,27 @@ end
 
 class Clerq::Repositories::NodeReader
 
-  # @param [String] file_name with node
+  # @param [String] filename with node
   # @return [Array<Node>] from file
-  def self.call(file_name)
-    new(file_name).call
+  def self.call(filename)
+    new(filename).call
   end
 
   # @param [Enumerator] lines; for testing purpose
   # @return [Array<Node>] from file
-  def call(text = File.foreach(@file_name))
-    STDOUT.print "Reading #{@file_name} ..."
+  def call(text = File.foreach(@filename))
+    STDOUT.print "Reading #{@filename} ..."
 
     read_nodes(text).each do |node_text|
       level, node = parse_node(node_text)
       next unless node
-      node[:file_name] = @file_name
+      node[:filename] = @filename
       insert_node(node, level)
     end
 
     STDOUT.puts @errors.empty? ? "OK" : "Errors found"
     unless @errors.empty?
-      STDERR.puts "Errors reading #{@file_name}"
+      STDERR.puts "Errors reading #{@filename}"
       STDERR.puts @errors.map{|e| "\t#{e}"}.join("\n")
     end
 
@@ -41,9 +41,9 @@ class Clerq::Repositories::NodeReader
 
   protected
 
-    def initialize(file_name)
-      @file_name = file_name
-      @node = Node.new(id: file_name)
+    def initialize(filename)
+      @filename = filename
+      @node = Node.new(id: filename)
       @errors = []
     end
 

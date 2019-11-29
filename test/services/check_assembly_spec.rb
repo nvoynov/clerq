@@ -18,7 +18,7 @@ describe CheckAssembly do
    end
 
    let(:spec) { CheckSvc.new }
-   let(:node) { Node.new(id: '0', meta: {file_name: '00'})}
+   let(:node) { Node.new(id: '0', meta: {filename: '00'})}
 
    describe '#nonuniq_id' do
      it 'must return empty hash when not found' do
@@ -27,7 +27,7 @@ describe CheckAssembly do
      end
 
      it 'must return errors' do
-       node << Node.new(id: node.id, meta: {file_name: '01'})
+       node << Node.new(id: node.id, meta: {filename: '01'})
        spec.node = node
        _(spec.nonuniq_id).must_equal({'0' => [node, node.items[0]]})
      end
@@ -39,12 +39,12 @@ describe CheckAssembly do
      let(:fout0) { "Checking for duplicates in node ids... OK\n" }
 
      let(:node1) {
-       Node.new(id: 'n0', meta: {file_name: '00'}).tap{|n|
-         n << Node.new(id: 'n1', meta: {file_name: '00'})
-         n << Node.new(id: 'n2', meta: {file_name: '00'})
-         n << Node.new(id: 'n2', meta: {file_name: '00'})
-         n << Node.new(id: 'n2', meta: {file_name: '02'})
-         n << Node.new(id: 'n2', meta: {file_name: '01'})
+       Node.new(id: 'n0', meta: {filename: '00'}).tap{|n|
+         n << Node.new(id: 'n1', meta: {filename: '00'})
+         n << Node.new(id: 'n2', meta: {filename: '00'})
+         n << Node.new(id: 'n2', meta: {filename: '00'})
+         n << Node.new(id: 'n2', meta: {filename: '02'})
+         n << Node.new(id: 'n2', meta: {filename: '01'})
        }
      }
 
@@ -70,9 +70,9 @@ describe CheckAssembly do
      let(:fout0) { "Checking for lost roots in node parents... OK\n" }
 
      let(:node1) {
-       Node.new(id: '0', meta: {file_name: '00'}).tap{|n|
-         n << Node.new(id: '1', meta: {parent: '01', file_name: '01'})
-         n << Node.new(id: '2', meta: {parent: '01', file_name: '02'})
+       Node.new(id: '0', meta: {filename: '00'}).tap{|n|
+         n << Node.new(id: '1', meta: {parent: '01', filename: '01'})
+         n << Node.new(id: '2', meta: {parent: '01', filename: '02'})
        }
      }
 
@@ -99,9 +99,9 @@ describe CheckAssembly do
      let(:fout0) { "Checking for lost childs in order_index... OK\n" }
 
      let(:node1) {
-       Node.new(id: '0', meta: {order_index: '1 2 3 4', file_name: '00'}).tap{|n|
-         n << Node.new(id: '1', meta: {parent: '01', file_name: '01'})
-         n << Node.new(id: '2', meta: {parent: '01', file_name: '02'})
+       Node.new(id: '0', meta: {order_index: '1 2 3 4', filename: '00'}).tap{|n|
+         n << Node.new(id: '1', meta: {parent: '01', filename: '01'})
+         n << Node.new(id: '2', meta: {parent: '01', filename: '02'})
        }
      }
 
@@ -150,9 +150,9 @@ describe CheckAssembly do
      let(:body2) {"The body contains [[link2]] link"}
 
      let(:node1) {
-       Node.new(id: '0', meta: {file_name: '00'}).tap{|n|
-         n << Node.new(id: '1', body: body1, meta: {file_name: '01'})
-         n << Node.new(id: '2', body: body2, meta: {file_name: '02'})
+       Node.new(id: '0', meta: {filename: '00'}).tap{|n|
+         n << Node.new(id: '1', body: body1, meta: {filename: '01'})
+         n << Node.new(id: '2', body: body2, meta: {filename: '02'})
        }
      }
 

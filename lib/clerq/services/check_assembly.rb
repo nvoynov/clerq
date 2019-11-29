@@ -32,7 +32,7 @@ module Clerq
         print "Checking for duplicates in node ids... "
         puts errors.empty? ? 'OK' : "#{errors.size} found"
         errors.each do |id, nodes|
-          occs = nodes.map{|n| n[:file_name]}
+          occs = nodes.map{|n| n[:filename]}
             .group_by{|i| i}
             .map{|k,v| [v.size, k]}
             .sort{|a, b| b.first <=> a.first}
@@ -47,7 +47,7 @@ module Clerq
         print "Checking for lost roots in node parents... "
         puts lost.empty? ? 'OK' : "#{lost.size} found"
         lost.each do |n|
-          puts "- {{parent: #{n[:parent]}}} of '#{n.id}' in '#{n[:file_name]}'"
+          puts "- {{parent: #{n[:parent]}}} of '#{n.id}' in '#{n[:filename]}'"
         end
       end
 
@@ -63,7 +63,7 @@ module Clerq
         print "Checking for lost childs in order_index... "
         puts errors.empty? ? 'OK' : "#{errors.size} found"
         errors.each do |n, lost|
-          puts "- {{order_index: #{lost.join(' ')}}} not found of node '#{n.id}' in '#{n[:file_name]}'"
+          puts "- {{order_index: #{lost.join(' ')}}} not found of node '#{n.id}' in '#{n[:filename]}'"
         end
       end
 
@@ -85,7 +85,7 @@ module Clerq
         print "Checking for lost links in nodes body... "
         puts errors.empty? ? 'OK' : "#{errors.size} found"
         errors.each do |link, arry|
-          where = arry.map{|n| "[#{n.id}] of '#{n[:file_name]}'"}.join(', ')
+          where = arry.map{|n| "[#{n.id}] of '#{n[:filename]}'"}.join(', ')
           puts "- [[#{link}]] in #{where}"
         end
       end

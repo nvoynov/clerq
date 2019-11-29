@@ -24,7 +24,7 @@ module Clerq
     no_commands {
       # @param [String]
       # @returns [String] usual name for ruby file
-      def thor_file_name(str);
+      def thor_filename(str);
         str.split(/[\W+_]/).map(&:downcase).join('_') + '.thor'
       end
 
@@ -56,7 +56,7 @@ module Clerq
       tts = [
         {tt: 'new/README.md.tt', target: 'README.md'},
         {tt: 'new/clerq.yml.tt', target: Clerq::Settings::STORAGE},
-        {tt: 'new/clerq.thor.tt', target: thor_file_name(project)},
+        {tt: 'new/clerq.thor.tt', target: thor_filename(project)},
         {tt: 'new/content.md.tt', target: File.join(settings.src, "#{project}.md")}
       ]
 

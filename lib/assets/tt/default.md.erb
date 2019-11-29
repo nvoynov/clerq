@@ -12,7 +12,7 @@ class MarkupNode < SimpleDelegator
     hsh = {}.merge(super)
     hsh.delete(:parent)
     hsh.delete(:order_index)
-    hsh.delete(:file_name)
+    hsh.delete(:filename)
     return '' if hsh.empty?
 
     hsh.map{|k, v| "#{k}: #{v}"}
