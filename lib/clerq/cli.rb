@@ -3,6 +3,7 @@
 require 'thor'
 require_relative 'interactors'
 include Clerq::Interactors
+include Clerq::Services
 
 module Clerq
 
@@ -99,28 +100,9 @@ module Clerq
     desc "check", "Check the project for errors"
     def check
       stop_unless_clerq!
-      errors = CheckAssembly.()
-      if errors.empty?
-        say "No errors found"
-        return
-      end
-
-      CHECK_MESSAGES.each do |key, msg|
-        if errors.key?(key)
-          say "The following #{msg[0]}:"
-          errors[key].each{|k,v| say "\t#{k}\t#{msg[1]} #{v.join(', ')}"}
-        end
-      end
-    rescue CheckAssembly::Failure => e
-      stop!(e.message)
+      puts "Checking assembly for writing errors..."
+      CheckAssembly.(QueryAssembly.())
     end
-
-    CHECK_MESSAGES = {
-      nonuniq_ids: ['node identifiers are non-uniqe', 'in'],
-      unknown_parents: ['meta[:parent] not found', 'in'],
-      unknown_references: ['links are unknown', 'in'],
-      unknown_order_index: ['node meta[:order_index] unknown', ':']
-    }.freeze
 
     desc "node ID [TITLE]", "Create a new node"
     method_option :template, aliases: "-t", type: :string, desc: "template"
@@ -151,6 +133,5 @@ module Clerq
     rescue QueryAssembly::Failure => e
       stop!(e.message)
     end
-
   end
 end

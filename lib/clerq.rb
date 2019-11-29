@@ -1,6 +1,7 @@
 require_relative 'clerq/version'
 require_relative 'clerq/entities'
 require_relative 'clerq/interactors'
+require_relative 'clerq/services'
 require_relative 'clerq/repositories'
 require_relative 'clerq/properties'
 require_relative 'clerq/settings'

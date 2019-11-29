@@ -7,7 +7,9 @@ describe 'clerq check' do
       ClerqSandbox.() do
         Clerq.reset
         cmd = ->{ Clerq::Cli.start ['check']}
-        _(proc{ cmd.call }).must_output "No errors found\n"
+        _(proc{ cmd.call }).must_output(
+          /Checking assembly for writing error/, ""
+        ) 
       end
     end
   end

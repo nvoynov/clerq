@@ -70,16 +70,20 @@ module Clerq
         @items.find{|r| r.id.eql? id}
       end
 
+      # @return [Array<String>] of ids from meta[:order_index]
+      def order_index
+        return [] unless @meta[:order_index]
+        @meta[:order_index].strip.gsub(/[\s]{2,}/, ' ').split(/\s/)
+      end
+
       # @return [Array<Node>] list of child nodes; when the node
       #   metadate has :order_index arrtibute, the list will be
       #   ordered according the attribute value
       def items
-        return @items if @items.empty?
-        return @items if @meta[:order_index].nil?
-        source = Array.new(@items)
-        order = @meta[:order_index]
+        return @items if @items.empty? || order_index.empty?
         [].tap do |ordered|
-          order.split(/ /).each do |o|
+          source = Array.new(@items)
+          order_index.each do |o|
             e = source.delete(item(o))
             ordered << e if e
           end

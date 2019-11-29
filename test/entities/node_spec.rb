@@ -170,6 +170,18 @@ describe Node do
     end
   end
 
+  describe '#order_index' do
+    it 'must return Array<String> of childs id' do
+      node[:order_index] = '1 2'
+      _(node.order_index).must_equal ['1', '2']
+    end
+
+    it 'must tolerate spare spaces' do
+      node[:order_index] = '     .1   .2'
+      _(node.order_index).must_equal ['.1', '.2']
+    end
+  end
+
   describe 'meta[:order_index]' do
     it 'must return as-is, when :order_index not provided' do
       node[:order_index] = ''
