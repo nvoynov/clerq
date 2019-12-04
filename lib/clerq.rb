@@ -1,11 +1,9 @@
 require_relative 'clerq/version'
 require_relative 'clerq/entities'
-require_relative 'clerq/interactors'
 require_relative 'clerq/services'
 require_relative 'clerq/repositories'
 require_relative 'clerq/properties'
 require_relative 'clerq/settings'
-require_relative 'clerq/render_erb'
 require_relative 'clerq/cli'
 include Clerq::Repositories
 
@@ -75,6 +73,12 @@ module Clerq
         raise ArgumentError, err
       end
       @node_repository = repository
+    end
+
+    def assemble(on_parse: nil, on_error: nil)
+      node_repository.assemble(
+        on_parse: on_parse,
+        on_error: on_error)
     end
 
   end

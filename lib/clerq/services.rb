@@ -1,9 +1,8 @@
-# encoding: UTF-8
-
 require_relative 'services/service'
 require_relative 'services/check_assembly'
-
-module Clerq
-  module Services
-  end
-end
+require_relative 'services/read_node'
+require_relative 'services/load_assembly'
+require_relative 'services/query_node'
+require_relative 'services/query_template'
+require_relative 'services/create_node'
+require_relative 'services/render_node'

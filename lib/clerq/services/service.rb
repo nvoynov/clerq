@@ -8,6 +8,8 @@ module Clerq
         new(*args).call
       end
 
+      private_class_method :new
+
       # Should be implemented in subclasses
       def call
       end

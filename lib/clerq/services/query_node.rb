@@ -1,16 +1,16 @@
 # encoding: UTF-8
 
-require_relative "interactor"
+require_relative "service"
 
 module Clerq
-  module Interactors
+  module Services
 
     # Provides repository nodes assembly
     # @param [Sring] optional query string
     # @return [Node] assembly of repository nodes
     #
     # Usage
-    #   QueryAssembly.()
+    #   QueryAssembly.(asse:, query:)
     #   QueryAssembly.(query_string)
     #
     # Rules for root node:
@@ -20,14 +20,12 @@ module Clerq
     #   when query returns mare than one nodes, then
     #     * it creates empty root node with meta[:query]
     #     * and places found nodes to the root
-    class QueryAssembly < Interactor
+    class QueryNode < Service
 
       def call
         proc = prepare_query unless @query.empty?
-        join = Clerq.node_repository.assemble
-        return join if @query.empty?
 
-        arry = join.select{|node| proc.call(node) }
+        arry = @assembly.select{|node| proc.call(node) }
         return arry.first.orphan! if arry.size == 1
 
         node = Node.new(title: Clerq.title, meta: {query: @query})
@@ -37,12 +35,17 @@ module Clerq
 
       protected
 
-      def initialize(query = '')
+      def initialize(assembly: , query: )
+        unless assembly.is_a? Node
+          msg = "Invailid argument 'assembly'"
+          raise ArgumentError, msg
+        end
         unless query.is_a? String
           msg = "Invailid argument 'query'"
           raise ArgumentError, msg
         end
         @query = query
+        @assembly = assembly
       end
 
       def prepare_query
@@ -50,13 +53,13 @@ module Clerq
         Node.new.select{|node| proc.call(node)}
         proc
       rescue Exception => e
-        msg = "Invalid query #{@query} (#{e.message})\n#{USAGE}"
-        raise self.class::Failure, msg
+        msg = "Invalid query format #{@query} (#{e.message})\n#{USAGE}"
+        raise ArgumentError, msg
       end
 
       USAGE = <<~EOF
-        QueryNode.call(query) evaluates query paramater
-        by eval() as 'Proc.new { |node| eval(@query) }'
+        QueryAssembly.call(query: ) evaluates query paramater
+        by eval() as 'Proc.new { |node| eval(query) }'
         e.g. the followed queries are valid:
           node.id == 'uc'
           node.title == 'Introduction'

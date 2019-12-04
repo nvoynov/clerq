@@ -1,6 +1,6 @@
 require_relative "../spec_helper"
 include Clerq::Repositories
-include Clerq::Interactors
+include Clerq::Services
 include Clerq::Entities
 
 describe CreateNode do
@@ -32,14 +32,14 @@ describe CreateNode do
   describe 'failures' do
     it 'must fail when template not found' do
       prc = Proc.new { CreateNode.(id: '1', template: 'wrong') }
-      err = _(->{ prc.call }).must_raise CreateNode::Failure
+      err = _(->{ prc.call }).must_raise StandardError
       _(err.message).must_match "template not found"
     end
 
     it 'must fail when node.id already in repository' do
       prc = Proc.new { CreateNode.(id: '1') }
       prc.call
-      err = _(->{ prc.call }).must_raise CreateNode::Failure
+      err = _(->{ prc.call }).must_raise StandardError
       _(err.message).must_match "already exists"
     end
   end

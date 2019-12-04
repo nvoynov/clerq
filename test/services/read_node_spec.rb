@@ -1,16 +1,18 @@
 require_relative '../spec_helper'
-include Clerq::Repositories
+include Clerq::Entities
+include Clerq::Services
 
-describe NodeReader do
-  class SpecReader < NodeReader
-    attr_reader :node, :errors
-    def initialize(file); super(file); end
-    def read_nodes(text); super(text); end
+describe ReadNode do
+
+  class SpecReadNode < ReadNode
+    attr_reader :node
+    public_class_method :new
+    def read_nodes(text, &block); super(text, &block); end
     def parse_node(text); super(text); end
     def insert_node(node, level); super(node, level); end
   end
 
-  let(:reader) { SpecReader.new('spec.md') }
+  let(:reader) { SpecReadNode.new('spec.md') }
 
   let(:content) {
     <<~EOF
@@ -28,14 +30,16 @@ describe NodeReader do
   }
 
   describe '#read_nodes' do
-    it 'must return array for empty text' do
-      nodes = reader.read_nodes(StringIO.new.each_line)
-      _(nodes).must_equal []
+    it 'must not call block for empty text' do
+      counter = 0
+      reader.read_nodes(StringIO.new.each_line){|n| counter += 1}
+      _(counter).must_equal 0
     end
 
-    it 'must return array' do
-      nodes = reader.read_nodes(StringIO.new(content).each_line)
-      _(nodes.size).must_equal 6
+    it 'must call block 6 times for :content' do
+      counter = 0
+      reader.read_nodes(StringIO.new(content).each_line){|n| counter += 1}
+      _(counter).must_equal 6
     end
   end
 
@@ -126,20 +130,16 @@ describe NodeReader do
     end
   end
 
-  describe 'self#call' do
+  describe '#call' do
     it 'must return array of nodes' do
       Sandbox.() do
         File.write('node.md', content)
-        nodes = NodeReader.('node.md')
-        _(nodes).must_be_kind_of Array
-        _(nodes.size).must_equal 5
+        ary = ReadNode.('node.md')
+        _(ary).must_be_kind_of Array
+        _(ary.size).must_equal 5
       end
     end
   end
 
-  describe 'console output' do
-    it 'must print reading file and reading result'
-    it 'must print reading errors to STDERR'
-  end
 
 end

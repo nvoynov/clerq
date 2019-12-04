@@ -33,7 +33,7 @@ describe Cli do
       it 'must print % title' do
         ClerqSandbox.() do
           cmd = ->{Clerq::Cli.start ['toc']}
-          _(proc{ cmd.call }).must_output "% #{Clerq.title}\n", ""
+          _(proc{ cmd.call }).must_output(/% #{Clerq.title}\n/, "")
         end
       end
     end
@@ -50,7 +50,7 @@ describe Cli do
       it 'must print % query' do
         ClerqSandbox.() do
           cmd = ->{ Clerq::Cli.start ['toc', '-q', query] }
-          _(proc{ cmd.call }).must_output output, ""
+          _(proc{ cmd.call }).must_output(%r[#{output}], "")
         end
       end
     end

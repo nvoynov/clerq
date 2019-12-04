@@ -2,8 +2,9 @@
 
 require_relative '../entities'
 require_relative 'file_repository'
-require_relative 'node_reader'
+require_relative '../services/read_node'
 include Clerq::Entities
+include Clerq::Services
 
 module Clerq
   module Repositories
@@ -21,9 +22,9 @@ module Clerq
 
       # asseble repository nodes hierarchy
       # @return [Node]
-      def assemble
+      def assemble(on_parse: nil, on_error: nil)
         @node = Node.new(id: 'join', title: Clerq.title)
-        loadn = load
+        loadn = load(on_parse: on_parse, on_error: on_error)
         loadn.each{|n| @node << n}
         subo!
         eqid!
@@ -36,12 +37,12 @@ module Clerq
 
       protected
 
-      def load
+      def load(on_parse: nil, on_error: nil)
         inside do
           [].tap do |ary|
             glob.each do |file|
-              # TODO: what to do with errors?
-              tmp = NodeReader.(file)
+              on_parse.call(file) if on_parse
+              tmp = ReadNode.(file, on_error)
               tmp.each{|node| ary << node }
             end
           end

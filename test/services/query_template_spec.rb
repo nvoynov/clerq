@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-include Clerq::Interactors
+include Clerq::Services
 include Clerq::Repositories
 
 describe QueryTemplate do
@@ -29,7 +29,7 @@ describe QueryTemplate do
   end
 
   it 'must raise ::Failure when template not found' do
-    _(proc{QueryTemplate.('tt.does.not.exist')}).must_raise QueryTemplate::Failure
+    _(proc{QueryTemplate.('tt.does.not.exist')}).must_raise StandardError
   end
 
 end

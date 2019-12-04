@@ -14,8 +14,8 @@ describe NodeRepository do
       super(filename)
     end
 
-    def load
-      super
+    def load(on_parse: nil, on_error: nil)
+      super(on_parse: on_parse, on_error: on_error)
     end
 
     def markup(n)

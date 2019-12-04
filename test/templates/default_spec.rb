@@ -39,7 +39,7 @@ describe 'default.md.erb' do
   }
 
   it 'assembly rendering must match to the sample' do
-    out = Clerq::RenderErb.(erb: template, object: assembly)
+    out = Clerq::Services::RenderErb.(erb: template, object: assembly)
     _(out).must_match sample
   end
 

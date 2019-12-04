@@ -1,26 +1,22 @@
 # encoding: UTF-8
-require_relative 'interactor'
-require_relative '../render_erb'
+require_relative 'service'
+require_relative 'query_template'
+require_relative 'render_erb'
 
 module Clerq
-  module Interactors
+  module Services
 
-    class RenderAssembly < Interactor
+    class RenderNode < Service
 
       def call
         @erb = QueryTemplate.(@ett)
-        asmb = QueryAssembly.(@qry)
-        RenderErb.(erb: @erb, object: asmb)
-        # TODO Clerq.binaries.save(@out, text)
-      rescue StandardError => e
-        raise Failure, e.message
+        RenderErb.(erb: @erb, object: @node)
       end
 
-      def initialize(template:, query: '')
+      def initialize(node: , template:)
         check_string_argument!(template, 'template')
         check_string_empty!(template, 'template')
-        check_string_argument!(query, 'query')
-        @qry = query
+        @node = node
         @ett = template
       end
 

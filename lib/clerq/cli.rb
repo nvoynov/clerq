@@ -1,8 +1,7 @@
 # encoding: UTF-8
 
 require 'thor'
-require_relative 'interactors'
-include Clerq::Interactors
+require_relative 'services'
 include Clerq::Services
 
 module Clerq
@@ -44,6 +43,13 @@ module Clerq
 
       def stop!(msg)
         raise Thor::Error, msg
+      end
+
+      def query_assembly(query)
+        # TODO pretty errors ...OK, ... 1 error found, ... 2 errors found
+        on_parse = lambda {|src| puts "Reading '#{src}'... "}
+        on_error = lambda {|err| puts "\terror: #{err} "}
+        QueryAssembly.(query: query, on_parse: on_parse, on_error: on_error)
       end
     }
 
@@ -88,12 +94,14 @@ module Clerq
       stop_unless_clerq!
       document = options[:output] || Clerq.document + '.md'
       template = options[:tt] || Clerq.template
-      query = options[:query] || ''
       build = File.join(Clerq.bin, document)
-      content = RenderAssembly.(template: template, query: query)
-      File.write(build, content)
+
+      node = LoadAssembly.()
+      node = QueryNode.(assembly: node, query: options[:query]) if options[:query]
+      text = RenderNode.(node: node, template: template)
+      File.write(build, text)
       say "'#{build}' created!"
-    rescue RenderAssembly::Failure => e
+    rescue StandardError => e
       stop!(e.message)
     end
 
@@ -101,7 +109,22 @@ module Clerq
     def check
       stop_unless_clerq!
       puts "Checking assembly for writing errors..."
-      CheckAssembly.(QueryAssembly.())
+      CheckAssembly.(LoadAssembly.())
+    end
+
+    desc "toc [OPTIONS]", "Print the project TOC"
+    method_option :query, aliases: "-q", type: :string, desc: "Query"
+    def toc
+      stop_unless_clerq!
+      node = LoadAssembly.()
+      node = QueryNode.(assembly: node, query: options[:query]) if options[:query]
+      puts "% #{node.title}"
+      puts "% #{node[:query]}" if node[:query]
+      node.to_a.drop(1).each{|n|
+        puts  "#{'  ' * (n.nesting_level - 1)}[#{n.id}] #{n.title}"
+      }
+    rescue StandardError => e
+      stop!(e.message)
     end
 
     desc "node ID [TITLE]", "Create a new node"
@@ -110,22 +133,9 @@ module Clerq
       stop_unless_clerq!
       fn = CreateNode.(id: id, title: title, template: options[:template] || '')
       say "'#{fn}' created"
-    rescue CreateNode::Failure => e
+    rescue StandardError => e
       stop!(e.message)
     end
 
-    desc "toc [OPTIONS]", "Print the project TOC"
-    method_option :query, aliases: "-q", type: :string, desc: "Query"
-    def toc
-      stop_unless_clerq!
-      node = QueryAssembly.(options[:query] || '')
-      puts "% #{node.title}"
-      puts "% #{node[:query]}" if node[:query]
-      node.to_a.drop(1).each{|n|
-        puts  "#{'  ' * (n.nesting_level - 1)}[#{n.id}] #{n.title}"
-      }
-    rescue QueryAssembly::Failure => e
-      stop!(e.message)
-    end
   end
 end
