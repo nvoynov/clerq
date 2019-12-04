@@ -62,8 +62,6 @@ Where
 * `{{parent: top}}` in an optional metadata section that becomes `node.meta`;
 * and finally `Body` is an optional `node.body`.
 
-From version 0.2.1 you can place `id` inside metadata, so you can provide ids trough metadata section. And you can use there `,`, `;`, and `\n` as attributes delimiter.
-
 ```markdown
 # Part two
 {{id: p1, parent: top}}
@@ -83,25 +81,41 @@ One more extra thing is links. You can place links to other nodes in the body se
 
 #### IDs
 
-Each node must have its own unique id so that you can refer to it in other parts of the project. That's why the recommended practice is to put the id straight into the header `# [node id] node title`.
+To be able to build a hierarchy or to refer to other nodes, one needs each node to have its unique id. And you can pass it straight into markdown header `# [node id] node title` or provide it through `{{id: }}`.
 
-ID can start with one dot, like `[.suffix]`, and clerq will add id of parent node. For the followed example, `[.fm]` will be translated to `[cm.fm]`.
+ID can start with one dot, like `[.suffix]`, and clerq will build the node id as `node.parent_id + node.id`.
+
+When and ID is not provided, the Clerq will generate it automatically. Let's see the example of node:
 
 ```markdown
-# 3 Function requirements
+# User requirements
+## Requirement 1
+## Requirement 2
+# Function requirements
 ## [cm] Components
 ### [.fm] File manager
 ### Logger
 ```
 
-When an id is not provided, Clerq will generate it automatically, and you can freely combine nodes that have id and that has not. For the example above, the `Logger`  will be identified as `[cm.01] Logger`.
+According to rules mentioned above the example will be translated as followed:
+
+```markdown
+# [01] User requirements
+## [01.01] Requirement 1
+## [01.02] Requirement 2
+# [02] Function requirements
+## [cm] Components
+### [cm.fm] File manager
+### [cm.01] Logger
+```
 
 #### Meta
 
-The excerpt, the text in brackets `{{ }}` that follows by the header, contains node attributes. And the second convention mentioned in [Writing](#writing) section is two magic metadata attributes that specify parameters of a hierarchy:
+The excerpt, the text in brackets `{{ }}` that follows by the header, contains node attributes. And the second convention mentioned in [Writing](#writing) section is the followed magic metadata attributes that specify parameters of a hierarchy:
 
-1. `parent: <id>` indicates that the node belongs to a node with specified `id`;
-2. `order_index: <id1> <id2>` indicates that child nodes must be lined up in specified order.
+1. `id: <id>` specifies id through metadata; when in provided together with `# [<id>]`, the last has priority;
+2. `parent: <id>` indicates that the node belongs to a node with specified `id`;
+3. `order_index: <id1> <id2>` indicates that child nodes must be lined up in specified order.
 
 You can place in metadata any simple string that suitable for providing additional information like status, originator, author, priority, etc. E.g.
 
@@ -210,26 +224,28 @@ A usual scenario will consist of two simple steps:
 
 The [Writing](#writing) section provides the basic knowledge to understand Clerq, and now it is the right time to see the [Node class](https://github.com/nvoynov/clerq/blob/master/lib/clerq/entities/node.rb). It implements the Composite pattern.
 
-#### Interactors
+#### Services
 
-Clerq provides five followed interactors:
+Clerq provides the following main service objects:
 
-* `QueryAssembly` provides assembly of repository as root Node;
+* `LoadAssembly` loads whole repository to Node class;
 * `CheckAssembly` checks the assembly for errors (ids and links);
-* `RenderAssembly` render assembly by provided erb-template;
+* `QueryNode` provides ability to query nodes from assembly;
+* `QueryTemplate` return template by the template name;
 * `CreateNode` crates new node in the repository;
-* `QueryTemplate` provides text of the template provided as parameter.
+* `RenderNode` return text rendered by ERB.
 
-The first part of each repository related task is to get repository assembly. It can be performed through  `NodeRepository#assemble` or `QueryAssembly.call`. Each of these methods returns Node that provides [Enumerable](https://ruby-doc.org/core-2.6.5/Enumerable.html) interface.
+The first part of each repository related task is to get repository assembly. It can be performed through  `NodeRepository#assemble` or `LoadAssembly.call()`. Each of these methods returns Node that provides [Enumerable](https://ruby-doc.org/core-2.6.5/Enumerable.html) interface.
 
-Let's invent some advanced scenario. Assume that you develop a "User requirements document" and the project policy requires that each user requirement must have the parameter called `originator`. You can write the policy as followed:
+Let's see an example. Assume that you are developing a "User requirements document" and the project policy requires that each user requirement must have the parameter called `originator`. You can write the policy as followed:
 
 ```ruby
 require 'clerq'
-include Clerk::Interactors
+include Clerq::Services
 
 # supposed you have something like user requirements document
-node = QueryAssembly.("node.title == 'User requirements'")
+node = LoadAssembly.()
+node = QueryNode.(node: node, query: "node.title == 'User requirements'")
 miss = node.drop(1).select{|n| n[:originator].empty? }
 unless miss.empty?
   errmsg = "`Originator` is missed for the following nodes:\n"
@@ -263,7 +279,7 @@ But this one provides, and the root node will be `Product SRS`.
 ## Functional requirements
 ```
 
-The QueryAssembly.call(query) follow similar logic
+The QueryAssembly follows the similar logic
 
 * When query result is empty, the Clerq will provide result with QueryNullNode (node.title == `Query`, node[:query] == QUERY_STRING)
 * When query result contains single node, it becomes a root query node.
@@ -277,7 +293,7 @@ Let's move the code from [Scripting](#scripting) section to the `<project>.thor`
 
 ```ruby
 require 'clerq'
-include Clerq::Interactors
+include Clerq::Services
 
 class MyDocument < Thor
   namespace :mydoc
@@ -290,7 +306,8 @@ class MyDocument < Thor
 
   desc 'check_originator', 'Check :originator'
   def check_originator
-    node = QueryAssembly.("node.title == 'User requirements'")
+    node = LoadAssembly.()
+    node = QueryAssembly.(node: node, query: "node.title == 'User requirements'")
     miss = node.drop(1).select{|n| n[:originator].empty? }
     unless miss.empty?
       errmsg = "`Originator` is missed for the following nodes:\n"
@@ -319,6 +336,13 @@ The Clerq provides the ability to precise adjusting the output for `clerq build`
    * `{{@@tree}}` - replaces the macro with the tree of child nodes;
    * `{{@@skip}}` - skip all content inside the brackets.
 
+### Publishing
+
+In addition to the `clerq build` command in [lib/clerq_doc.thor](https://github.com/nvoynov/clerq/blob/master/lib/assets/lib/clerq_doc.rb) I provided the example of basic documents management tasks (it will be placed in new project `lib` folder). You can find there two example of commands that you can start your own publishing automation.
+
+* `thor clerq:doc:publish` will create `<project>.docx` and `<project>.html`;
+* `thor clerq:doc:grab` will import provided document into the current project repository.
+
 ## Known issues
 
 ### Thor version
@@ -335,7 +359,7 @@ Because `default.md.erb` and `pandoc.md.erb` have  inside the same class `Markup
 
 Use modern text editor that provides projects tree. like Atom, Sublime, etc.
 
-Hold your projects in Git
+Hold your projects in Git.
 
 Use pandoc for generating output in different formats
 

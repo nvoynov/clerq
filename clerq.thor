@@ -4,7 +4,7 @@ require 'thor'
 
 class ClerqSrc < Thor
   include Thor::Actions
-  namespace :clerqsrc
+  namespace 'clerq:src'.to_sym
 
   desc 'docs', 'Prepare docs'
   def docs

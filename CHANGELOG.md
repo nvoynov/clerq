@@ -1,5 +1,12 @@
 # Change log
 
+## 0.3.0 (2019-12-04)
+
+* Meet services instead of interactors. All interactors removed and their responsibility moved to appropriate services.
+* Refactored printing information about repository loading progress. Now `ReadNode.call(on_error: )` accepts `on_error` callback and you can provide any method proc or lambda there like `lambda {|err| puts err}`.
+* Refactored previous behavior where interactors loaded repository by QueryAssembly interactor. Now it is responsibility of `LoadAssembly` service and other services that require repository just get it through parameter.
+* `clerq new PROJECT` command brings the `lib\clerq_doc.thor` example of publishing and importing existing documents in the current clerq project repository. To see these just copy the file to root project folder near `<project>.thor` file.
+
 ## 0.2.1 (2019-11-29)
 
 * Enhanced the `Node` class that brings the possibility to provide node id through `{{id: <id>}}` metadata attribute. But it will just skipped when id is already provided by `# [<id>]`.
