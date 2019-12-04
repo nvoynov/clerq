@@ -75,6 +75,7 @@ module Clerq
           template(tt[:tt], File.join(Dir.pwd, tt[:target]), config)
         end
         directory('tt', File.join(Dir.pwd, 'tt'))
+        directory('lib', File.join(Dir.pwd, 'lib'))
         say "Project created!"
       end
     end
