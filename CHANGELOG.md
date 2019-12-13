@@ -1,5 +1,10 @@
 # Change log
 
+## 0.3.1 (2019-12-13)
+
+* Fixed error with reading files that read attributes to body.
+* Added `mm` command to `<project>.thor` that creates "Meeting Minutes" files in `<project>/mm` folder. 
+
 ## 0.3.0 (2019-12-04)
 
 * Meet services instead of interactors. All interactors removed and their responsibility moved to appropriate services.

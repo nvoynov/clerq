@@ -78,8 +78,32 @@ describe ReadNode do
 
     it 'must parse :meta' do
       _, node = reader.parse_node("#\n{{source: user}}")
+      _(node.id).must_equal ''
       _(node.title).must_equal ''
       _(node.meta).must_equal({source: 'user'})
+    end
+
+    it 'must parse :title and :meta' do
+      _, node = reader.parse_node("# title\n{{source: user}}")
+      _(node.id).must_equal ''
+      _(node.title).must_equal 'title'
+      _(node.meta).must_equal({source: 'user'})
+    end
+
+    it 'must parse :title and :meta and :id in meta' do
+      _, node = reader.parse_node("# title\n{{id: 01, source: user}}")
+      _(node.id).must_equal '01'
+      _(node.title).must_equal 'title'
+      _(node.meta).must_equal({source: 'user'})
+    end
+
+    it 'must parse :title and :meta and :id in meta 1' do
+      text = "# Main\n{{id: 00, parent: 00}}"
+      _, node = reader.parse_node(text)
+      _(node.id).must_equal '00'
+      _(node.title).must_equal 'Main'
+      _(node.meta).must_equal({parent: '00'})
+      _(node.body).must_equal ''
     end
 
     it 'must parse :meta delimiters' do
@@ -139,7 +163,36 @@ describe ReadNode do
         _(ary.size).must_equal 5
       end
     end
-  end
 
+    it 'must read ...' do
+      text = <<~EOF
+        # Main
+        {{id: 00}}
+
+        # Part 1
+        {{id: 01, parent: 00}}
+
+        # [02] Part 2
+        {{parent: 00}}
+      EOF
+
+      Sandbox.() do
+        File.write('text.md', text)
+        ary = ReadNode.('text.md')
+
+        _(ary.size).must_equal 3
+        _(ary[0].id).must_equal '00'
+        _(ary[0].title).must_equal 'Main'
+
+        _(ary[1].id).must_equal '01'
+        _(ary[1].title).must_equal 'Part 1'
+
+        _(ary[2].id).must_equal '02'
+        _(ary[2].title).must_equal 'Part 2'
+      end
+    end
+
+
+  end
 
 end

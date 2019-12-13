@@ -6,8 +6,37 @@ class <%=config[:klass]%> < Thor
 
   desc "stat", "Print statistic"
   def stat
-    nodes = Clerq::Interactors::JoinNodes.()
+    nodes = Clerq.assemble
     say "#{nodes.to_a.drop(1).size} nodes total"
   end
+
+  desc "mm", "Create meeting minutes"
+  def mm
+    minutes = "meeting minutes #{Time.new.strftime('%Y-%m-%d')}.md"
+    content = "% #{minutes.capitalize}\n\n" + MINUTES_TEMPLATE
+    Dir.mkdir('mm') unless Dir.exist?('mm')
+    File.write("mm/#{minutes}", content)
+    say "'mm/#{minutes}' created!"
+  end
+
+  MINUTES_TEMPLATE = <<~EOF
+    # Attendants
+
+    1.
+    2.
+    3.
+
+    # Questions
+
+    1.
+    2.
+    3.
+
+    # Resolutions
+
+    1.
+    2.
+    3.
+  EOF
 
 end

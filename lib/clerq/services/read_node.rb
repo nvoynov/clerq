@@ -11,7 +11,9 @@ module Clerq
     class ReadNode < Service
 
       def call
-        text = File.foreach(@filename)
+        # FIXME: something wrong here when foreach!
+        #
+        text = File.read(@filename)
         read_nodes(text) do |node_text|
           level, node = parse_node(node_text)
           next unless node
@@ -38,6 +40,7 @@ module Clerq
       # @return [Array<String>] where each item represents one node
       def read_nodes(text, &block)
         quote, node = false, []
+        text = text.split(?\n) unless text.is_a? Enumerator
         text.each do |line|
           if line.start_with?('#') && !quote && !node.empty?
             block.call(node.join("\n"))
