@@ -117,6 +117,7 @@ Processing: Handling of the authorization should take no more than 5 seconds.
 Outputs: If the match is successful, a positive acknowledgment must come to the member at the signature capture device as well as to the PT.  If the match is unsuccessful, an appropriate message to that effect must be provided to both the capture device and the PT.]_
 
 ## 3.2 Quality Requirements
+
 ### 3.2.1 Reliability
 _[The capability of the software product to maintain a specified level of performance when used under specified conditions.
 [Requirements for reliability of the system should be specified here. Some suggestions follow:
