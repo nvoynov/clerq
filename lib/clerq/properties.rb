@@ -4,9 +4,7 @@ module Clerq
     def property(name, options = {}, &validation)
       default_value = options[:default]
       define_method name do
-        v = instance_variable_get("@#{name}")
-        v = default_value unless v
-        v
+        instance_variable_get("@#{name}") || default_value
       end
 
       define_method "#{name}=" do |val|

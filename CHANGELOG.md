@@ -1,9 +1,13 @@
 # Change log
 
+## 0.3.2 (2020-07-05)
+
+* Updated `rake`, `bundler`, and `thor` dependencies.
+
 ## 0.3.1 (2019-12-13)
 
 * Fixed error with reading files that read attributes to body.
-* Added `mm` command to `<project>.thor` that creates "Meeting Minutes" files in `<project>/mm` folder. 
+* Added `mm` command to `<project>.thor` that creates "Meeting Minutes" files in `<project>/mm` folder.
 
 ## 0.3.0 (2019-12-04)
 
