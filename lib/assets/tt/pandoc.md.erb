@@ -3,7 +3,9 @@ require 'delegate'
 # Template for generate documents by Pandoc
 class MarkupNode < SimpleDelegator
   def title
-    "#{'#' * nesting_level} #{super} {##{url(id)}}"
+    s = super
+    s = ".#{id.split(/\./).last}" if s.empty?
+    "#{'#' * nesting_level} #{s} {##{url(id)}}"
   end
 
   def meta

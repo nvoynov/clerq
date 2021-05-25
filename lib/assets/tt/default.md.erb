@@ -4,7 +4,9 @@ require 'delegate'
 
 class MarkupNode < SimpleDelegator
   def title
-    '#' * nesting_level + ' ' + super
+    s = super
+    s = ".#{id.split(/\./).last}" if s.empty?
+    '#' * nesting_level + ' ' + s
   end
 
   def meta

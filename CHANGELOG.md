@@ -1,5 +1,11 @@
 # Change log
 
+## 0.3.3 (2021-07-05)
+
+* Updated keyword argument in Service class to support Ruby 3. If you need Ruby 2.X support, you should use v0.3.2.
+* Updated `minitest`, `bundler` and `thor` dependencies.
+* Improved `default.md.erb` and `pandoc.md.erb` - now it adds automatic title `.id` when original title is empty.
+
 ## 0.3.2 (2020-07-05)
 
 * Updated `rake`, `bundler`, and `thor` dependencies.

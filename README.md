@@ -18,6 +18,12 @@ Install it yourself as:
 
     $ gem install clerq
 
+For Ruby 2.X you should use version 0.3.2:
+
+    $ gem install clerq -v 0.3.2
+
+It's because of keyword arguments changes in Ruby 3
+
 ## Usage
 
 The Clerq is entirely based on one single domain entity `Node` that represents a node of tree hierarchy and provides `id`, `title`, `body`, and `metadata` attributes. It supposes the following simple workflow:
