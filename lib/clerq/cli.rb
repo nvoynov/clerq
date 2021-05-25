@@ -14,6 +14,10 @@ module Clerq
       File.join Clerq.root, "lib/assets"
     end
 
+    def self.exit_on_failure?
+      false
+    end
+
     desc "--version, -v", "Print the version"
     def version
       puts "Clerq v#{Clerq::VERSION}"

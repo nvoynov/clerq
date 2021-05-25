@@ -7,7 +7,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    minitest (5.13.0)
+    minitest (5.14.4)
     rake (13.0.1)
     thor (1.0.1)
 
@@ -15,10 +15,10 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  bundler (~> 2.1.4)
+  bundler (~> 2.2.3)
   clerq!
-  minitest (~> 5.0)
+  minitest (~> 5.14.2)
   rake (~> 13.0)
 
 BUNDLED WITH
-   2.1.4
+   2.2.3

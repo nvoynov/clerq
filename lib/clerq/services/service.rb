@@ -4,8 +4,8 @@ module Clerq
   module Services
 
     class Service
-      def self.call(*args)
-        new(*args).call
+      def self.call(*args, **opts)
+        new(*args, **opts).call
       end
 
       private_class_method :new
