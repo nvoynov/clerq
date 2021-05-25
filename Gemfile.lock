@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clerq (0.3.2)
+    clerq (0.3.3)
       thor (~> 1.0.1)
 
 GEM
@@ -21,4 +21,4 @@ DEPENDENCIES
   rake (~> 13.0)
 
 BUNDLED WITH
-   2.2.3
+   2.2.15
