@@ -26,6 +26,8 @@ It's because of keyword arguments changes in Ruby 3
 
 ## Promo
 
+![Clerq Promo Project](assets/promo.png)
+
 Inside Clerq there is a demo project that was created and is still used to develop Clerq itself and its script-extensions.
 
 I am sure this project will be useful when you get to know the product. So, I propose to open it now and look inside as you move forward. Do the following in your console:
@@ -34,8 +36,7 @@ I am sure this project will be useful when you get to know the product. So, I pr
     $ cd promo
     $ clerq promo
     $ atom .
-
-![Clerq Promo Project](assets/promo.png)
+    $ thor list
 
 ## Usage
 
