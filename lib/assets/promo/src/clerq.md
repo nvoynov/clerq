@@ -1,14 +1,14 @@
-# 1 Introduction
+# Introduction
 {{skip_meta: true}}
 
-## 1.1 Purpose
+## Purpose
 {{skip_meta: true}}
 
 The purpose of this document is to provide a demo project "Clerq Promo SRS" for all perspective Clerq users to introduce the system by example and provide a sandbox for experiments for the existing users.
 
 The other purpose (rather technical) is to have repository that provides all possible combinations of markup inside (links, ids, macros, etc.) to exercise in writing documents templates.   
 
-## 1.2 Scope
+## Scope
 {{skip_meta: true}}
 
 This software system will be a command-line interface (CLI) that provides a set of tools related to requirements management tasks. The system will also provide the requirements repository structure and the format of the requirements sources.
@@ -17,7 +17,7 @@ The system does not provide any graphical user interface. Assumed that users cre
 
 Any features related to restricting access to the requirements repository or to the functions of the system are out of scope. Assumed that each project repository is under control of an SCM tool (Git, Subversion, etc.) and the SCM is in charge of user's access to the SCM artifacts.
 
-## 1.3 Definitions, acronyms, and abbreviations
+## Definitions, acronyms, and abbreviations
 {{skip_meta: true}}
 
 CLI
@@ -40,16 +40,14 @@ OS
 
 :   Operations System
 
-[//]: # (to use the extension `--from markdown+definition_lists`)
-
-## 1.4 References
+## References
 {{skip_meta: true}}
 
 1. [Markdown Guide](https://www.markdownguide.org/)
-2. [Pandoc User’s Guide](https://pandoc.org/MANUAL.html)
-3. [Git Documentation](https://git-scm.com/doc)
+2. [Pandoc User's Guide](https://pandoc.org/MANUAL.html)
+3. [Git User's Manual](https://git-scm.com/docs/user-manual.html)
 
-## 1.5 Overview
+## Overview
 {{skip_meta: true}}
 
 The remaining sections of this document provide user requirements and functional requirements of the system.
@@ -58,10 +56,10 @@ The next chapter [[us]] introduces the system from User Stories' point of view a
 
 The following chapter [[fr]] describes detailed requirements for functions and user interfaces that are based on user stories from the previous chapter. The chapter is structured around system components and is written primarily for developers and quality assurance specialists.
 
-# [us] 2 User stories
+# [us] User stories
 {{skip_meta: true; order_index: .reader .writer}}
 
-# [fr] 3 Functional requirements
+# [fr] Functional requirements
 {{skip_meta: true}}
 
 ## [cmp] Components

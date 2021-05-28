@@ -24,6 +24,19 @@ For Ruby 2.X you should use version 0.3.2:
 
 It's because of keyword arguments changes in Ruby 3
 
+## Promo
+
+Inside Clerq there is a demo project that was created and is still used to develop Clerq itself and its script-extensions.
+
+I am sure this project will be useful when you get to know the product. So, I propose to open it now and look inside as you move forward. Do the following in your console:
+
+    $ clerq new promo
+    $ cd promo
+    $ clerq promo
+    $ atom .
+
+![Clerq Promo Project](assets/promo.png)
+
 ## Usage
 
 The Clerq is entirely based on one single domain entity `Node` that represents a node of tree hierarchy and provides `id`, `title`, `body`, and `metadata` attributes. It supposes the following simple workflow:
@@ -65,7 +78,7 @@ Where
 * `#` familiar markdown header that indicates a new `node`;
 * `[p1]` is an optional identifier that becomes `node.id`;
 * `Part two` is an optional `node.title`;
-* `{{parent: top}}` in an optional metadata section that becomes `node.meta`;
+* `{{parent: top}}` is an optional metadata section that becomes `node.meta`;
 * and finally `Body` is an optional `node.body`.
 
 ```markdown
@@ -140,7 +153,7 @@ parent: r}}
 
 #### Assets
 
-When you want to provide some assets or links to something outside the repository you can provide the lint to the assets. Put the asset in the `bin/assets` folder and specify the link.
+When you want to provide some assets or links to something outside the repository you can provide the link to the assets. Put the asset in the `bin/assets` folder and specify the link.
 
 ```markdown
 # [ent] Entities
@@ -237,9 +250,9 @@ Clerq provides the following main service objects:
 * `LoadAssembly` loads whole repository to Node class;
 * `CheckAssembly` checks the assembly for errors (ids and links);
 * `QueryNode` provides ability to query nodes from assembly;
-* `QueryTemplate` return template by the template name;
+* `QueryTemplate` returns template by the template name;
 * `CreateNode` crates new node in the repository;
-* `RenderNode` return text rendered by ERB.
+* `RenderNode` returns text rendered by ERB.
 
 The first part of each repository related task is to get repository assembly. It can be performed through  `NodeRepository#assemble` or `LoadAssembly.call()`. Each of these methods returns Node that provides [Enumerable](https://ruby-doc.org/core-2.6.5/Enumerable.html) interface.
 
@@ -344,7 +357,7 @@ The Clerq provides the ability to precise adjusting the output for `clerq build`
 
 ### Publishing
 
-In addition to the `clerq build` command in [lib/clerq_doc.thor](https://github.com/nvoynov/clerq/blob/master/lib/assets/lib/clerq_doc.rb) I provided the example of basic documents management tasks (it will be placed in new project `lib` folder). You can find there two example of commands that you can start your own publishing automation.
+In addition to the `clerq build` command in [lib/clerq_doc.thor](https://github.com/nvoynov/clerq/blob/master/lib/assets/lib/clerq_doc.thor) one can find and example of basic documents management tasks (it will be placed in new project `lib` folder). You can find there two example of commands that you can start your own publishing automation.
 
 * `thor clerq:doc:publish` will create `<project>.docx` and `<project>.html`;
 * `thor clerq:doc:grab` will import provided document into the current project repository.
