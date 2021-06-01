@@ -9,7 +9,7 @@ class Promo < Thor
   def publish
     doc = Clerq.settings.document
     tmp = '.publish.md'
-    `clerq build -t pandoc.md.erb -o #{tmp}`
+    `clerq build -o #{tmp}`
     Dir.chdir(Clerq.settings.bin) do
       `pandoc -s --toc #{tmp} -o "#{doc}.docx"`
       File.delete(tmp)
