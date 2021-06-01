@@ -1,9 +1,10 @@
 # Change log
 
-## 0.3.4 (2021-05-31)
+## 0.3.4 (2021-06-01)
 
 * Now the gem works for both Ruby versions 2.X and 3.X.
-* Improved templates. MarkupNode was extracted from template to a separate file and single template defalult.md.erb was left; cleanup templates test.
+* Improved templates. MarkupNode was extracted to separate file and single template defalult.md.erb was left; cleaned templates tests.
+* Improved `promo:publish` command and now it's using default.md.erb
 
 ## 0.3.3 (2021-05-25)
 

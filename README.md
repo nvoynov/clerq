@@ -20,7 +20,7 @@ Install it yourself as:
 
 ## Promo
 
-![Clerq Promo Project](assets/promo.png)
+![Clerq Promo Project](promo.png)
 
 Inside Clerq there is a demo project that was created and is still used to develop Clerq itself and its script-extensions. You can see the project [here](https://github.com/nvoynov/clerq/tree/master/lib/assets/promo) ([requirements sources](https://github.com/nvoynov/clerq/tree/master/lib/assets/promo/src) and produced documents [Clerq SRS.md](https://github.com/nvoynov/clerq/blob/master/lib/assets/promo/bin/Clerq%20SRS.md), [Clerq SRS.docx](https://github.com/nvoynov/clerq/blob/master/lib/assets/promo/bin/Clerq%20SRS.docx))
 
