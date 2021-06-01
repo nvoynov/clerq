@@ -18,12 +18,6 @@ Install it yourself as:
 
     $ gem install clerq
 
-For Ruby 2.X you should use version 0.3.2:
-
-    $ gem install clerq -v 0.3.2
-
-It's because of keyword arguments changes in Ruby 3
-
 ## Promo
 
 ![Clerq Promo Project](assets/promo.png)
@@ -344,21 +338,22 @@ And then you can run the task by
 
 This example is just very basic and your automation scripts could be much more complex.
 
-Another quick example is [clerq.thor] (https://github.com/nvoynov/clerq/blob/master/clerq.thor) file that was created just to overcome handling curly bracket `{{}}` in Jekyll and now I run `thor clerqsrc:docs` every time after changing this file.
+Another quick example is the [clerq.thor](https://github.com/nvoynov/clerq/blob/master/clerq.thor) file that was created just to overcome handling curly bracket `{{}}` in Jekyll and now I run `thor clerq:src:docs` every time after changing this file.
 
 ### Templating
 
-The Clerq provides the ability to precise adjusting the output for `clerq build` command by erb-templates and gives you two basic templates from the box.
+The output of the `clerq build` command can be precisely adjusted by modifying the corresponding "erb" template.
 
-* [default.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/default.md.erb) that just combines all nodes to one markdown document;
-* [pandoc.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/pandoc.md.erb) is more advanced, it produces [Pandoc's Markdown](https://pandoc.org/MANUAL.html#pandocs-markdown) and provides three followed macros for node body:
-   * `{{@@list}}` - replaces the macro with the list of child nodes;
-   * `{{@@tree}}` - replaces the macro with the tree of child nodes;
-   * `{{@@skip}}` - skip all content inside the brackets.
+One can see the standard template in [default.md.erb](https://github.com/nvoynov/clerq/blob/master/lib/assets/tt/default.md.erb). It produced output in [Pandoc's Markdown](https://pandoc.org/MANUAL.html#pandocs-markdown) format and supports the following macros in node body:
+
+* `{{@@list}}` - replaces the macro with the list of child nodes;
+* `{{@@tree}}` - replaces the macro with the tree of child nodes;
+* `{{@@eval}}` - eval ruby code inside the brackets;
+* `{{@@skip}}` - skip all content inside the brackets.
 
 ### Publishing
 
-In addition to the `clerq build` command in [lib/clerq_doc.thor](https://github.com/nvoynov/clerq/blob/master/lib/assets/lib/clerq_doc.thor) one can find and example of basic documents management tasks (it will be placed in new project `lib` folder). You can find there two example of commands that you can start your own publishing automation.
+In addition to the `clerq build` command one can find an example of basic documents management tasks in the [lib/clerq_doc.thor](https://github.com/nvoynov/clerq/blob/master/lib/assets/lib/clerq_doc.thor) (it will be placed in new project `lib` folder). You can find there two example of commands that you can start your own publishing automation.
 
 * `thor clerq:doc:publish` will create `<project>.docx` and `<project>.html`;
 * `thor clerq:doc:grab` will import provided document into the current project repository.
@@ -369,10 +364,6 @@ In addition to the `clerq build` command in [lib/clerq_doc.thor](https://github.
 
 The one issue I certain in is when you are using different version of thor, your custom scripts won't work.
 
-### Test suite
-
-Because `default.md.erb` and `pandoc.md.erb` have  inside the same class `MarkupNode`, sometimes one of `default_spec.rb` or `pandoc_spec.rb` fails.
-
 ## Some considerations
 
 ### Some obvious things
@@ -382,10 +373,6 @@ Use modern text editor that provides projects tree. like Atom, Sublime, etc.
 Hold your projects in Git.
 
 Use pandoc for generating output in different formats
-
-### MarkupNode
-
-Don't like the current dirty solution with templates and incorporated MarkupNode that does all that stuff with macro. It is the first attempt to provide template that can skip comments.
 
 ### Several artifacts
 

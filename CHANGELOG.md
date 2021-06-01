@@ -1,6 +1,11 @@
 # Change log
 
-## 0.3.3 (2021-07-05)
+## 0.3.4 (2021-05-31)
+
+* Now the gem works for both Ruby versions 2.X and 3.X.
+* Improved templates. MarkupNode was extracted from template to a separate file and single template defalult.md.erb was left; cleanup templates test.
+
+## 0.3.3 (2021-05-25)
 
 * Updated keyword argument in Service class to support Ruby 3. If you need Ruby 2.X support, you should use v0.3.2.
 * Updated `minitest`, `bundler` and `thor` dependencies.

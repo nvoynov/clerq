@@ -27,7 +27,7 @@ class ClerqDoc < Thor
   }
 
   # Why does one need to grab the document?
-  #   it started in MS Word but the author decieded to pкoceed in Clerq
+  #   it started in MS Word but the author decieded to proceed in Clerq
   #   it is the source for the clerq project, SRS based on Vision?
   #   something else?
   # TODO provide -q/--query QUERY_STRING parameter
