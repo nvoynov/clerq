@@ -1,3 +1,5 @@
+__This project is CLOSED! Use [nvoynov/marko](https://github.com/nvoynov/marko) if you still interesting in compliling markup from separated sources__
+
 # Clerq
 
 __What is Clerq?__
